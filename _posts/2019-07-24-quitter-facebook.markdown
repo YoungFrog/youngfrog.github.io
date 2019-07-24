@@ -34,5 +34,4 @@ Comment arranger cela ?
 Une autre possibilité pour remplacer FB est d'aller vers une plateforme type
 Diaspora, Mastodon, GNU Social, etc. mais ils n'ont pas la masse critique et ne
 l'atteindront sans doute jamais sans devenir des putaclic. Ces plateformes n'ont
-donc pas le gros avantages de FB, et souffrent de problèmes similaires à ceux de
-FB, en ce qu'on est contraint par l'interface.
+donc pas le gros avantages de FB.
