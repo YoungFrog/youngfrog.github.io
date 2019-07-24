@@ -9,3 +9,4 @@ github_username:  youngfrog
 
 # Build settings
 markdown: kramdown
+future: false
