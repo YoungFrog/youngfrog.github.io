@@ -3,6 +3,10 @@ layout: post
 title: "Évaluations à distance en période de confinement"
 categories: blog personnal
 ---
+(Ce post est issu d'une réflexion personnelle, alimentée d'idées de la part d'ami·e·s et de collègues, qu'iels en soient tous et toutes remerciées.)
+
+Contexte : confinement (coronavirus), évaluations à distance dans l'enseignement supérieur.
+
 
 # Craintes de triche :
 
@@ -58,4 +62,9 @@ categories: blog personnal
 
 3.  Examen oral avec préparation
     -   Idem, mais enregistrer la préparation de l'étudiant par webcam pour pouvoir y revenir en cas de doute.
+
+4.  Examen "machine" (codage)
+    -   Activation du micro et du partage d'écran, enregistré
+    -   L'étudiant·e passe son examen tout en commentant ce qu'il fait ou s'apprête à faire
+    -   Le surveillant peut passer à l'improviste (cf ci-dessus, Big Brother) et/ou revenir sur l'enregistrement en cas de doute
 
