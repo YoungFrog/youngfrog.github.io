@@ -7,6 +7,13 @@ categories: blog personnal
 
 Contexte : confinement (coronavirus), évaluations à distance dans l'enseignement supérieur.
 
+Je n'envisage aucune piste pédagogique.
+Je constate par ailleurs que le contexte est vraiment difficile tant pour les profs que, et avant tout, pour les étudiant·e·s.
+Aucune solution n'est idéale.
+La meilleure est probablement l'examen oral, sans toutefois offrir les même possibilités que l'examen "en présentiel".
+
+Enfin, tout ceci n'est qu'une partie de la réflexion.
+
 
 # Craintes de triche :
 
