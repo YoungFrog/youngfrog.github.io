@@ -1,0 +1,61 @@
+---
+layout: post
+title: "Évaluations à distance en période de confinement"
+categories: blog personnal
+---
+
+# Craintes de triche :
+
+-   Substitution (une autre personne passe à la place de l'étudiant·e, soit dans la même pièce, soit qui s'identifie sur une plateforme en ligne à la place de l'étudiant·e concerné·e)
+-   Recherches sur internet
+-   Utilisation de ses notes/cours
+-   Communication avec des tiers (d'autres étudiants ou pas) via ordinateur ou smartphone (par écrit, avec ou sans oreillettes)
+-   Comunication avec des personnes sous le même toit (oralement ou par signes)
+
+(N.B.: Savoir en quoi la triche est un problème, est un autre sujet. Je ne l'aborde pas.)
+
+
+# Autres difficultés :
+
+-   Manque ou difficultés matériel (p.ex. ordinateur, webcam, micro, connexion internet aléatoire)
+-   Difficultés pour être seul et au calme à un moment spécifique
+-   LMS (plateforme en ligne) qui flanche
+-   Soucis pour installer/utiliser les logiciels demandés (versions, plateformes, droits d'utilisation)
+
+
+# Pistes :
+
+-   Questionnaire définis aléatoirement : contenu et ordre des (sous-)questions différents pour chaque (groupe d')étudiants.
+-   Temps imparti pour chaque (ensemble de) question(s) du questionnaire
+-   Empêcher de revenir aux questions précédentes (si réponses en ligne)
+-   Réponses manuscrites (à scanner/photographier et envoyer électroniquement)
+-   Examen oral par webcam
+-   Logiciel bloquant l'ordinateur hors du questionnaire (type: "testWe")
+-   Webcam pour surveiller l'environnement (p.ex. tête et mains, carte d'étudiant)
+-   Surveillance de l'écran via fonctionnalité de partage d'écran
+    -   caveat: on ne sait pas si tout l'écran est vu (p.ex. partage d'une fenêtre seulement, ou partage d'une machine virtuelle)
+-   Micro pour surveiller l'environnement
+-   Demander à l'étudiant·e de déclarer solennellement qu'iel ne trichera pas
+
+
+# Combinaisons spécifiques :
+
+1.  Écrit façon QCM
+    -   Identification en ligne sur le LMS
+    -   Passer un questionnaire en ligne (qcm, questions ouvertes, etc.) aléatoire avec un temps imparti
+    -   Tout justifier sur papier
+    -   À la fin : transmettre le papier scanné/photographié incluant carte et numéro étudiant
+        
+        Pendant l'examen :
+    -   Surveillance par caméra (haut du corps) et micro (à la mode panoptisme, Foucualt, Big Brother & co)
+        
+        Dispositions supplémentaires :
+    -   Faire passer un oral "de vérification" à certain·e·s étudiant·e·s (sous réserve de note minimale, ou choisi·e·s aléatoirement)
+
+2.  Examen oral en face à face, sans préparation.
+    (Sans doute le plus proche du fonctionnement oral en présentiel)
+    -   Demander à l'étudiant·e de tourner sa caméra si on a peur qu'iel soit aidé par une personne ou des éléments hors champ
+
+3.  Examen oral avec préparation
+    -   Idem, mais enregistrer la préparation de l'étudiant par webcam pour pouvoir y revenir en cas de doute.
+
