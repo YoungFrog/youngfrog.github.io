@@ -20,6 +20,7 @@ Enfin, tout ceci n'est qu'une partie de la réflexion.
 -   Substitution (une autre personne passe à la place de l'étudiant·e, soit dans la même pièce, soit qui s'identifie sur une plateforme en ligne à la place de l'étudiant·e concerné·e)
 -   Recherches sur internet
 -   Utilisation de ses notes/cours
+    -   Prévoir des dispositifs "à cahier ouvert" semble quasiment-incontournable
 -   Communication avec des tiers (d'autres étudiants ou pas) via ordinateur ou smartphone (par écrit, avec ou sans oreillettes)
 -   Comunication avec des personnes sous le même toit (oralement ou par signes)
 
@@ -54,14 +55,10 @@ Enfin, tout ceci n'est qu'une partie de la réflexion.
 1.  Écrit façon QCM
     -   Identification en ligne sur le LMS
     -   Passer un questionnaire en ligne (qcm, questions ouvertes, etc.) aléatoire avec un temps imparti
+    -   Pendant l'examen : Surveillance par caméra (haut du corps) et micro (à la mode panoptisme, Foucualt, Big Brother & co)
     -   Tout justifier sur papier
     -   À la fin : transmettre le papier scanné/photographié incluant carte et numéro étudiant
-        
-        Pendant l'examen :
-    -   Surveillance par caméra (haut du corps) et micro (à la mode panoptisme, Foucualt, Big Brother & co)
-        
-        Dispositions supplémentaires :
-    -   Faire passer un oral "de vérification" à certain·e·s étudiant·e·s (sous réserve de note minimale, ou choisi·e·s aléatoirement)
+    -   Dispositions supplémentaires : Faire passer un oral "de vérification" à certain·e·s étudiant·e·s (sous réserve de note minimale, ou choisi·e·s aléatoirement)
 
 2.  Examen oral en face à face, sans préparation.
     (Sans doute le plus proche du fonctionnement oral en présentiel)
