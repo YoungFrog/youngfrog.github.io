@@ -12,22 +12,22 @@ Quand je suis récepteur, je suis sensible à la qualité du message.
 J'essaye alors de prendre cela en compte lorsque je passe du côté de l'émetteur.
 Je n'y arrive généralement pas comme je le souhaiterais, mais c'est un autre problème.
 
-## La notion de message envoyé à un grand nombre de récepteurs
-L'expression *message envoyé à un grand nombre de récepteurs* est utilisée dans un sens général :
+<!-- ## La notion de message envoyé à un grand nombre de récepteurs -->
+<!-- L'expression *message envoyé à un grand nombre de récepteurs* est utilisée dans un sens général : -->
 
-- message écrit (e-mail à plusieurs personnes, annonce sur un forum)
-- oral (face à un auditoire)
-- audio et/ou vidéo (enregistrement de session live)
+<!-- - message écrit (e-mail à plusieurs personnes, annonce sur un forum) -->
+<!-- - oral (face à un auditoire) -->
+<!-- - audio et/ou vidéo (enregistrement de session live) -->
 
-(Ce sont des exemples.)
+<!-- (Ce sont des exemples.) -->
 
 ## L'importance de la qualité d'un message
 
 ### Le temps collectif
 Ma règle : plus le nombre de recepteurs est important, plus je dois faire attention à la qualité de mon message, afin d'optimiser l'utilisation collective du temps disponible.
 
-Par exemple, si mon message prend 1 minute à lire à 300 personnes, cela correspond à 5 heures collectivement.
-Si je parviens, en dix minutes de mon temps, à condenser mon message pour qu'il ne prenne que 30 secondes, cela correspondra à 2h40 minutes collectivement (300 * 0,5 minutes = 2h30 pour mes récepteurs, auxquelles j'ajoute les 10 minutes de mon propre temps). 
+Par exemple, si mon message prend 1 minute à lire à 300 personnes, cela correspond à 300 minutes, soit 5 heures, collectivement.
+Si je parviens, en dix minutes de mon temps, à condenser mon message pour qu'il ne prenne que 30 secondes à lire, cela correspondra à 2h40 minutes collectivement (300 * 0,5 minutes = 2h30 pour mes récepteurs, auxquelles j'ajoute les 10 minutes de mon propre temps). 
 
 ### Get the point accross
 Un message doit permettre de faire passer de l'information. S'il est de qualité, ça marche mieux.
