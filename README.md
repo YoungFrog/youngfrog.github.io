@@ -21,3 +21,15 @@ https://pnmcartodesign.wordpress.com/2018/10/01/how-to-create-a-featured-image-t
 
 # Summary
 J'ai ajouté un élément de configuration tout bête summary: et indiqué à mon layout post.html de l'utiliser s'il est là. Le code css pour blockquote était déjà fait.
+
+
+# Opengraph
+
+how does FB parse your URL
+https://developers.facebook.com/tools/debug/
+
+adding a few meta tags. here's an opengraph documentation :
+https://developers.facebook.com/docs/sharing/webmasters#markup
+
+And the og doc for the full list of types :
+https://ogp.me/#types

@@ -4,6 +4,10 @@ title: About -- À propos
 permalink: /about/
 ---
 
+<div style="margin: 10px; width: 150px; float: left">
+	<img src="{{ site.image }}">
+</div>
+
 Quand YoungFrog raconte ses conneries tard dans la nuit, on peut parfois les retrouver ici.
 
 Bonne lecture.

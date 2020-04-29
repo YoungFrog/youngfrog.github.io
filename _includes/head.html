@@ -2,9 +2,22 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width initial-scale=1" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
+    {% if page.title %}<meta property="og:title" content="{{ page.title }}" />{% endif %}
+    <meta property="og:site_name" content="{{ site.title }}" />
+    <meta property="og:description" content="{{ page.summary | default: site.description }}" />
+    {% if page.layout == "post" %}
+    <meta property="og:type" content="article" />
+    <meta property="og:author:username" content="{{ page.author | default: site.author }}" />
+    {% endif %}
+    {% if page.featured-image %}<meta property="og:image" content="{{ page.featured-image }}">{% else %}<meta property="og:image" content="{{ site.image }}">{% endif %}
+    {% if page.url %}
+    <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+    {% endif %}
+    {% for tag in page.categories %}<meta property="article:tag" content="{{ tag }}">
+    {% endfor %}
     <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
     <meta name="description" content="{{ site.description }}">
+    <meta property="fb:app_id" content="{{ site.fb_app_id }}"/>
 
     <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
