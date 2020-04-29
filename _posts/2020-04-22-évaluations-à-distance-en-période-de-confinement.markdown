@@ -2,10 +2,12 @@
 layout: post
 title: "Évaluations à distance en période de confinement"
 categories: blog personnal
+featured-image: /pics/christin-hume-agJcKpk4XYc-unsplash.jpg
+featured-source: <a style="background-color:black;color:white;text-decoration:none;padding:4px 6px;font-family:-apple-system, BlinkMacSystemFont, &quot;San Francisco&quot;, &quot;Helvetica Neue&quot;, Helvetica, Ubuntu, Roboto, Noto, &quot;Segoe UI&quot;, Arial, sans-serif;font-size:12px;font-weight:bold;line-height:1.2;display:inline-block;border-radius:3px" href="https://unsplash.com/@christinhumephoto?utm_medium=referral&amp;utm_campaign=photographer-credit&amp;utm_content=creditBadge" target="_blank" rel="noopener noreferrer" title="Download free do whatever you want high-resolution photos from Christin Hume"><span style="display:inline-block;padding:2px 3px"><svg xmlns="http://www.w3.org/2000/svg" style="height:12px;width:auto;position:relative;vertical-align:middle;top:-2px;fill:white" viewBox="0 0 32 32"><title>unsplash-logo</title><path d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"></path></svg></span><span style="display:inline-block;padding:2px 3px">Christin Hume</span></a>
+featured-alt: une horloge
+summary: Dans un contexte de confinement (coronavirus), comment organiser des évaluations à distance dans l’enseignement supérieur ?
 ---
 (Ce post est issu d'une réflexion personnelle, alimentée d'idées de la part d'ami·e·s et de collègues, qu'iels en soient tous et toutes remerciées.)
-
-Contexte : confinement (coronavirus), évaluations à distance dans l'enseignement supérieur.
 
 Je n'envisage aucune piste pédagogique.
 Je constate par ailleurs que le contexte est vraiment difficile tant pour les profs que, et avant tout, pour les étudiant·e·s.
@@ -15,7 +17,7 @@ La meilleure est probablement l'examen oral, sans toutefois offrir les même pos
 Enfin, tout ceci n'est qu'une partie de la réflexion.
 
 
-# Craintes de triche :
+# Craintes de triche
 
 -   Substitution (une autre personne passe à la place de l'étudiant·e, soit dans la même pièce, soit qui s'identifie sur une plateforme en ligne à la place de l'étudiant·e concerné·e)
 -   Recherches sur internet
@@ -27,7 +29,7 @@ Enfin, tout ceci n'est qu'une partie de la réflexion.
 (N.B.: Savoir en quoi la triche est un problème, est un autre sujet. Je ne l'aborde pas.)
 
 
-# Autres difficultés :
+# Autres difficultés
 
 -   Manque ou difficultés matériel (p.ex. ordinateur, webcam, micro, connexion internet aléatoire)
 -   Difficultés pour être seul et au calme à un moment spécifique
@@ -35,7 +37,7 @@ Enfin, tout ceci n'est qu'une partie de la réflexion.
 -   Soucis pour installer/utiliser les logiciels demandés (versions, plateformes, droits d'utilisation)
 
 
-# Pistes :
+# Pistes
 
 -   Questionnaire définis aléatoirement : contenu et ordre des (sous-)questions différents pour chaque (groupe d')étudiants.
 -   Temps imparti pour chaque (ensemble de) question(s) du questionnaire
@@ -50,7 +52,7 @@ Enfin, tout ceci n'est qu'une partie de la réflexion.
 -   Demander à l'étudiant·e de déclarer solennellement qu'iel ne trichera pas
 
 
-# Combinaisons spécifiques :
+# Combinaisons spécifiques
 
 1.  Écrit façon QCM
     -   Identification en ligne sur le LMS
@@ -71,4 +73,3 @@ Enfin, tout ceci n'est qu'une partie de la réflexion.
     -   Activation du micro et du partage d'écran, enregistré
     -   L'étudiant·e passe son examen tout en commentant ce qu'il fait ou s'apprête à faire
     -   Le surveillant peut passer à l'improviste (cf ci-dessus, Big Brother) et/ou revenir sur l'enregistrement en cas de doute
-

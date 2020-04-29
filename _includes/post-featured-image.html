@@ -1,0 +1,7 @@
+<div style="margin: auto; width: max-content;">
+    <div style="width: max-content;">
+	<img alt="{{ include.alt | default: 'Illustration pour l&apos;article' }}"
+	     src="{{ include.image }}">
+    </div>
+    {% if include.source %} {{ include.source }} {% endif %}
+</div>
