@@ -9,9 +9,9 @@
     <meta property="og:type" content="article" />
     <meta property="og:author:username" content="{{ page.author | default: site.author }}" />
     {% endif %}
-    {% if page.featured-image %}<meta property="og:image" content="{{ page.featured-image }}">{% else %}<meta property="og:image" content="{{ site.image }}">{% endif %}
+    <meta property="og:image" content="{{ page.featured-image | default: site.image | prepend: site.baseurl | prepend: site.url }}">
     {% if page.url %}
-    <meta property="og:url" content="{{ site.url }}{{ page.url }}">
+    <meta property="og:url" content="{{ page.url | prepend: site.baseurl | prepend: site.url }}">
     {% endif %}
     {% for tag in page.categories %}<meta property="article:tag" content="{{ tag }}">
     {% endfor %}
