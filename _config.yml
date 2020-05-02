@@ -4,7 +4,7 @@ author: youngfrog
 email: nrichard@members.fsf.org
 description: Les errements de ma pensée, parfois nus, parfois enrobés. Mes écrits n'engagent que ceux qui y croient, mais pas trop.
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://youngfrog.github.io" # the base hostname & protocol for your site
+url: "https://youngfrog.lavnir.be" # the base hostname & protocol for your site
 twitter_username: youngfrog
 github_username:  youngfrog
 image: /pics/DSC00035_mod_400x400.JPG
