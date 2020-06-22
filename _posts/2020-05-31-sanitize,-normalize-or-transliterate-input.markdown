@@ -16,6 +16,8 @@ L'idée de base : si je crée un fichier parlant de "Émile Brön", j'ai probabl
 emacs --batch -f package-initialize -l unidecode --eval '(princ (unidecode "Fichier pour Émile Brön.pdf"))' 2>/dev/null
 ```
 
+(Notons que la variante avec `unidecode-sanitize` donnerait `fichier-pour-emile-bronpdf`.)
+
 * Avec Python : un module <http://pypi.python.org/pypi/Unidecode/> à installer via `pip install unidecode`
 
 ```
