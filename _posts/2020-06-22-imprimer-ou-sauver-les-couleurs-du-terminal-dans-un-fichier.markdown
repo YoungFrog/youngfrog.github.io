@@ -4,10 +4,8 @@ title: "Imprimer ou sauver les couleurs du terminal dans un fichier"
 categories: blog personnal
 # featured-image: 
 # featured-source: 
-# summary: ""
+summary: "Il m'arrive régulièrement de me dire que l'affichage sur mon terminal n'est pas si mal, et que j'aimerais bien le sauver en PDF, voire l'imprimer. Avec les couleurs."
 ---
-Il m'arrive régulièrement de me dire que l'affichage sur mon terminal n'est pas si mal, et que j'aimerais bien le sauver en PDF, voire l'imprimer. Avec les couleurs.
-
 Jusque là, la solution que j'ai pu trouver passe via un fichier intermédiaire en HTML.
 
 ## Création du fichier HTML
