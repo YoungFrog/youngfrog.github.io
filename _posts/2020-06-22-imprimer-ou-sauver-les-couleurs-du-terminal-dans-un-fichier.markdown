@@ -27,7 +27,7 @@ Si je diminue la taille de ma fenêtre, le texte ne se "wrappe" pas. Ceci a une 
 
 ## Création du fichier PDF
 
-J'ai vu recommandé [^1] `wkhtmltopdf` et je l'ai utilisé.
+J'ai vu recommandé [^1] plusieurs fois [^2] `wkhtmltopdf` et je l'ai utilisé.
 
 ``` shell
 wkhtmltopdf fichier.html fichier.pdf
@@ -37,6 +37,8 @@ ou, si on aime les *brace expansion*,
 wkhtmltopdf fichier.{html,pdf}
 ```
 
+À noter que cet outil fonctionne bien avec des fichiers HTML simples, mais va (probablement) avoir du mal sur des documents plus complexes utilisant du CSS3 ou JavaScript [^2].
+
 [^1]: <https://askubuntu.com/a/647809/> 
 
-https://stackoverflow.com/questions/176476/how-can-i-automate-html-to-pdf-conversions
+[^2]: <https://stackoverflow.com/questions/176476/how-can-i-automate-html-to-pdf-conversions>
