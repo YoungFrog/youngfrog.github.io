@@ -1,9 +1,7 @@
 ---
 layout: post
 title: "Custom domain / Domaine personnalisé vers Github pages"
-categories: blog personnal
-# featured-image: 
-# featured-source: 
+categories: informatique
 summary: "Comment ai-je défini un domaine personnalisé qui pointe vers mon site (publié au travers de Github pages)."
 ---
 Mes écrits sont désormais disponibles depuis [youngfrog.lavnir.be](https://youngfrog.lavnir.be) au lieu de [youngfrog.github.io](https://youngfrog.github.io). J'explique comment j'ai fait : c'est très simple, et ça coûte précisément le prix du nom de domaine.

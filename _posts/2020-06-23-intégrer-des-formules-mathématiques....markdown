@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Intégrer des formules mathématiques..."
-categories: blog personnal
+categories: informatique
 # featured-image: 
 # featured-source: 
 summary: "Comment produire des formules, écrites avec LaTeX, par exemple pour un document HTML "

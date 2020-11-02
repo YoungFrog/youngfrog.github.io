@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Quitter Facebook"
-categories: blog personnal
+categories: jepensetouthaut
 ---
 
 Cela fait des année que j'envisage de quitter Facebook. Facebook est une entité

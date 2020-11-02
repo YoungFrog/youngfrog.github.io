@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "sanitize, normalize or transliterate input"
-categories: blog personnal
+categories: informatique
 # featured-image: 
 # featured-source: 
 summary: "Parfois j'ai des accents, mais je n'en veux pas (nom de fichiers, etc.)"

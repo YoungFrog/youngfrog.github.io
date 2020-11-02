@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Ce que j'écris sur ce blog"
-categories: blog personnal
+categories: jepensetouthaut
 ---
 
 Dans mon expérience, quand on lit quelque chose[^1], on se forge un jugement sur son

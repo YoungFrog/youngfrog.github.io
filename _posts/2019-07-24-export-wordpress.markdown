@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Export wordpress"
-categories: blog personnal informatique
+categories: informatique
 last_modified_at: "2019-07-26 Fri 08:19"
 ---
 

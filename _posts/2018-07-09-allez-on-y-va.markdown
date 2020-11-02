@@ -2,7 +2,7 @@
 layout: post
 title:  "Le but de ma vie"
 date:   2018-07-09
-categories: blog personnal
+categories: jepensetouthaut
 ---
 Impossible de savoir quel est le but de ma vie. Voici quelques hypothèses, mais
 je pense qu'aucune n'est vraie.
