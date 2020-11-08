@@ -13,3 +13,21 @@ fb_app_id: 237195747511348
 # Build settings
 markdown: kramdown
 future: false
+
+plugins:
+  - jekyll-archives
+
+jekyll-archives:
+  enabled: all
+  permalinks:
+    year: '/:year/'
+    month: '/:year/:month/'
+    day: '/:year/:month/:day/'
+    tag: '/tag/:name/'
+    category: '/category/:name/'
+  layouts:
+    # year: year-archive
+    # month: month-archive
+    # day: day-archive
+    category: category-archive
+    # tag: tag-archive
