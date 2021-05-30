@@ -31,6 +31,8 @@ L'utilisateur "nginx" doit aussi avoir acc√®s aux espaces de stockages locaux d√
 
 ## HTTPS
 
+Warning : this does not seem to work properly.
+
 I followed this to make a self signed certificate :
 
 https://medium.com/@antelle/how-to-generate-a-self-signed-ssl-certificate-for-an-ip-address-f0dd8dddf754
