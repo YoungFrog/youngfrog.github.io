@@ -2,8 +2,9 @@
 
 
 # clean & build
-jekyll clean || exit 1
-jekyll build || exit 1
+bundle install
+bundle exec jekyll clean || exit 1
+bundle exec jekyll build || exit 1
 cp CNAME -t _site || exit 1
 
 # navigate into the build output directory
