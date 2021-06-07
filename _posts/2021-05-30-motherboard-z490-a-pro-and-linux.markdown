@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Motherboard Z490-A PRO and Linux"
-categories: jepensetouthaut informatique
+categories: informatique
 # featured-image: 
 # featured-source: 
 summary: ""
