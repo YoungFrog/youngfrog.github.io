@@ -1,14 +1,28 @@
 #!/usr/bin/env sh
 
-die() {
+warn() {
     >&2 printf '%s\n' "$@"
+}
+die() {
+    warn "$@"
     exit 1
 }
+
+confirm() {
+    read -p "Continuer ? " ans
+    case "$ans" in
+        y|Y|o|O|yes) echo "Continuing...";;
+        *) die "Aborting."
+    esac
+}
+
 
 target=_site # This is a constant : jekyll uses _site
 
 if [ -e "$target" ]; then
-    die "$target already exists. Aborting."
+    warn "$target already exists."
+    tree "$target"
+    confirm
 fi
 
 # clean & build
