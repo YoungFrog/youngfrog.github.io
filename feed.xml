@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Le journal de YoungFrog</title>
+    <description>Les errements de ma pensée, parfois nus, parfois enrobés. Mes écrits n'engagent que ceux qui y croient, mais pas trop.</description>
+    <link>https://youngfrog.lavnir.be/</link>
+    <atom:link href="https://youngfrog.lavnir.be/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Sat, 10 Jul 2021 14:29:04 +0200</pubDate>
+    <lastBuildDate>Sat, 10 Jul 2021 14:29:04 +0200</lastBuildDate>
+    <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title>Vers Chromecast depuis Linux</title>
+        <description>&lt;p&gt;Nous avons accueilli à la maison une jolie enceinte : la &lt;a href=&quot;https://www.bang-olufsen.com/fr/be/enceintes/beosound-level&quot;&gt;Beosound Level&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Cette enceinte s’active/se configure via une application dédiée (reconnaissance via Bluetooth). 
+Une fois configurée elle se connecte au réseau local en Wi-Fi (elle en demande poliment le mot de passe).
+Elle intègre Google Assistant et s’accorde donc aussi avec l’application Google Home.&lt;/p&gt;
+
+&lt;p&gt;Le manuel mentionne une entrée RJ45 et une Line-In&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt; : il faut enlever un petit cache en plastique pour les trouver.&lt;/p&gt;
+
+&lt;p&gt;Les sources sonores seraient donc :&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Via Bluetooth (facile via un Smartphone ou un portable).&lt;/li&gt;
+  &lt;li&gt;Via une entrée câblée Line-in (qu’est-ce qui produit du Line-Out ? Une TV ou une carte son peut-être bien ?)&lt;/li&gt;
+  &lt;li&gt;Via l’application b&amp;amp;o : des radios sont proposées (streamées via Wi-Fi j’imagine, je n’ai pas vérifié)&lt;/li&gt;
+  &lt;li&gt;Via le Google Assistant, qui fera le lien avec Youtube Music ou Spotify (ou d’autres applis sur le téléphone, d’après l’application Google Home)&lt;/li&gt;
+  &lt;li&gt;Via le “Chromecast” intégré [j’imagine que c’est en réalité ceci que Google Assistant utilise]. Le terme &lt;em&gt;Chromecast&lt;/em&gt; se réfère d’habitude à un appareil qui se branche sur un écran TV. 
+Ici, il s’agit uniquement d’&lt;em&gt;audio&lt;/em&gt;, directement intégré à l’enceinte.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;chromecast&quot;&gt;Chromecast&lt;/h2&gt;
+
+&lt;p&gt;Mon ordinateur fixe ne possède pas de carte réseau sans-fil, donc ni Wi-Fi, ni Bluetooth. J’ai donc forcément été curieux : comment envoyer du son vers l’appareil via Wi-Fi ?
+La réponse est : Chromecast le permet !
+Je savais déjà que Google Chrome (le navigateur) pouvait “caster” un onglet. Je pense que Chromium le peut aussi. 
+À partir de là, on peut imaginer sans peine que quelques hackers ont déjà résolu le problème de caster n’importe quoi depuis n’importe où… et en effet.&lt;/p&gt;
+
+&lt;p&gt;Ce que j’ai cru comprendre de ce &lt;a href=&quot;https://fr.wikipedia.org/wiki/Chromecast&quot;&gt;Chromecast&lt;/a&gt; du point de vue technique:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Il faut configurer Chromecast pour utiliser un réseau local (ça c’est fait en configurant l’enceinte)&lt;/li&gt;
+  &lt;li&gt;Niveau détection, Chromecast s’annonce via &lt;a href=&quot;https://en.wikipedia.org/wiki/Zero-configuration_networking&quot;&gt;mDNS&lt;/a&gt; (anciennement via un protocole nommé DIAL)&lt;/li&gt;
+  &lt;li&gt;Lorsqu’une source audio (par exemple mon ordi) veut diffuser via Chromecast/l’enceinte, elle met en place un serveur de streaming HTTP, et enfin&lt;/li&gt;
+  &lt;li&gt;elle envoie un signal à Chromecast pour commencer à récupérer ce signal en streaming&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Les deux derniers points sont issus de mon interprétation de ce que j’ai lu/vu/fait avec &lt;a href=&quot;#mkchromecast&quot;&gt;mkchromecast&lt;/a&gt;
+et aussi de ce qui est décrit dans cet &lt;a href=&quot;https://mfkl.github.io/chromecast/2018/10/21/High-performance-cross-platform-streaming-with-libvlc-and-Chromecast-on-.NET.html&quot;&gt;article parlant du support Chromecast par libvlc&lt;/a&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;mkchromecast&quot;&gt;mkchromecast&lt;/h3&gt;
+&lt;p&gt;Le but de https://github.com/muammar/mkchromecast/ est de pouvoir diffuser vers un appareil Chromecast depuis la ligne de commande.&lt;/p&gt;
+
+&lt;p&gt;On peut simplement lancer &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mkchromecast&lt;/code&gt;, puis ouvrir &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pavucontrol&lt;/code&gt; et modifier le périphérique de sortie d’une application audio vers mkchromecast. 
+L’audio sera alors diffusé sur l’appareil Chromecast. 
+Plus précisément mkchromecast va ouvrir un serveur web sur le port 5000 grâce à Node.js, duquel l’appareil Chromecast pourra récupérer le stream à diffuser.&lt;/p&gt;
+
+&lt;p&gt;J’ai eu les deux soucis suivants:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://github.com/muammar/mkchromecast/issues/334 – workaround: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pip3 install zeroconf==0.24.3&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;https://github.com/home-assistant-libs/pychromecast/issues/356 – un assez gros délai avant qu’un son joue.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Par ailleurs je n’ai pas réussi à utiliser l’option &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-i fichier&lt;/code&gt; pour diffuser un fichier spécifique : la connexion se fait, mais aucun son ne sort de l’appareil.&lt;/p&gt;
+
+&lt;h3 id=&quot;vlc&quot;&gt;vlc&lt;/h3&gt;
+
+&lt;p&gt;Depuis sa &lt;a href=&quot;https://www.videolan.org/vlc/releases/3.0.0.html&quot;&gt;version 3&lt;/a&gt;, &lt;a href=&quot;https://www.videolan.org/vlc/&quot;&gt;VLC&lt;/a&gt; peut streamer vers Chromecast et d’autres produits uPNP&lt;/p&gt;
+
+&lt;p&gt;Le plus dur pour moi fut de trouver le menu (dans la barre de menu : Lecture, puis Rendu), pour sélectionner l’appareil Chromecast. Sinon ça marche vraiment au poil. Par contre&lt;/p&gt;
+
+&lt;h3 id=&quot;pulseaudio-dlna&quot;&gt;pulseaudio-dlna&lt;/h3&gt;
+
+&lt;p&gt;J’ai également brièvement regardé à https://github.com/Cygn/pulseaudio-dlna/ (un fork de &lt;a href=&quot;https://github.com/masmu/pulseaudio-dlna&quot;&gt;l’original&lt;/a&gt;, pour fonctionner avec Python3) mais je ne l’ai pas testé. Le principe est similaire à mkchromecast. On trouvera quelques infos de mise en place ici: https://www.linuxuprising.com/2020/10/how-to-use-pulseaudio-dlna-to-stream.html?m=1&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;J’ai appris (https://myaudiolover.com/line-in-vs-mic-in) qu’une Line-In était une entrée au format Jack pour un son déjà amplifié. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Sat, 10 Jul 2021 00:00:00 +0200</pubDate>
+        <link>https://youngfrog.lavnir.be/informatique/2021/07/10/vers-chromecast-depuis-linux.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/informatique/2021/07/10/vers-chromecast-depuis-linux.html</guid>
+        
+        
+        <category>informatique</category>
+        
+      </item>
+    
+      <item>
+        <title>Structurer l'information</title>
+        <description>&lt;p&gt;Parmi mes nombreux défauts :&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;j’ai la mémoire courte,&lt;/li&gt;
+  &lt;li&gt;je veux tout retenir et tout garder,&lt;/li&gt;
+  &lt;li&gt;j’ai besoin d’avoir de l’ordre,&lt;/li&gt;
+  &lt;li&gt;je suis fainéant et (donc) bordélique&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Bien sûr les deux derniers points sont contradictoires, et ça me cause pas mal de stress.
+Je vis avec.&lt;/p&gt;
+
+&lt;h2 id=&quot;rangement-numérique&quot;&gt;Rangement numérique&lt;/h2&gt;
+
+&lt;p&gt;Dans ma vie numérique, mon besoin d’avoir de l’ordre se traduit par des tentatives –toutes foirées– de structurer mes fichiers, mes images, mes informations, etc. de diverses manières. Tantôt je crée des dossiers, tantôt des fichiers avec des catégories, et à chaque fois ça finit par partir en sucette :&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;j’oublie où se trouve tel dossier,&lt;/li&gt;
+  &lt;li&gt;j’oublie de ranger un fichier à un endroit,&lt;/li&gt;
+  &lt;li&gt;je duplique une partie de l’information, etc.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;org-mode&quot;&gt;Org mode&lt;/h3&gt;
+
+&lt;p&gt;J’ai notamment tenté d’utiliser &lt;a href=&quot;https://orgmode.org/&quot;&gt;Org mode&lt;/a&gt; (qui fait partie de &lt;a href=&quot;https://www.gnu.org/software/emacs/&quot;&gt;GNU Emacs&lt;/a&gt;) pour tout retenir et structurer.&lt;/p&gt;
+
+&lt;p&gt;C’est plutôt cool, mais (et là je pense tout haut) :&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;la structure arborescente ne convient pas vraiment à mon bordelisme.&lt;/li&gt;
+  &lt;li&gt;j’ai toujours eu la flemme d’intégrer l’agenda Org mode avec l’agenda sur mon GSM&lt;/li&gt;
+  &lt;li&gt;j’utilise plusieurs machines pour prendre mes notes, et je devrais donc synchroniser tout ça, ce que j’ai toujours eu la flemme de faire aussi&lt;/li&gt;
+  &lt;li&gt;j’ai du mal à faire des liens entre les différents morceaux de mes fichiers&lt;/li&gt;
+  &lt;li&gt;la notion de fichier attaché (org-attach) était difficile à utiliser pour moi : une fois un fichier attaché, je veux pouvoir le renommer, le déplacer, etc. mais alors Org perd sa trace –c’est normal mais ça me saoule.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;gnu-hyperbole&quot;&gt;GNU Hyperbole&lt;/h3&gt;
+
+&lt;p&gt;Je n’ai jamais creusé, mais je pense que je devrais creuser. C’est aussi un élément de GNU Emacs.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Invest an hour learning Hyperbole now and speed your daily information
+management for years to come.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Ça promet !&lt;/p&gt;
+
+&lt;p&gt;Je pense que GNU Hyperbole peut s’utiliser en surcouche de Org mode (ou plein d’autres fichiers)
+donc je dois pouvoir rentrer là dedans petit à petit. Je vais essayer.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 03 Jul 2021 00:00:00 +0200</pubDate>
+        <link>https://youngfrog.lavnir.be/jepensetouthaut/2021/07/03/structurer-linformation.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/jepensetouthaut/2021/07/03/structurer-linformation.html</guid>
+        
+        
+        <category>jepensetouthaut</category>
+        
+      </item>
+    
+      <item>
+        <title>Hit or No Hit : checkdoc, TIN, NIF...</title>
+        <description>&lt;p&gt;## 
+Sur
+https://ec.europa.eu/taxation_customs/tin/#/tin-country&lt;/p&gt;
+
+&lt;p&gt;la fiche concernant la belgique indique:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;que le TIN/NIF (Tax Identification Number / Numéro d’Identification Fiscale) est le numéro national.&lt;/li&gt;
+  &lt;li&gt;qu’on peut vérifier un NIF sur https://www.checkdoc.be/CheckDoc/homepage.do&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Je vais donc sur ce site, checkdoc. Je m’y enregistre (gratuitement), et je teste en entrant mon propre NIF.&lt;/p&gt;
+
+&lt;p&gt;Surprise ! Je suis un “Hit”, c’est-à-dire que mon “document (…) est connu par les autorités administratives belges comme volé, perdu, périmé ou invalidé ou (…) n’a pas été émis par ces autorités.”&lt;/p&gt;
+
+&lt;p&gt;Je reste en indiquant cette fois mon numéro de carte d’identité (qui n’est donc pas le NN), et là je suis “NO HIT”. Ouf!&lt;/p&gt;
+
+&lt;p&gt;Conclusion : europa.eu se plante sur ce point. Génial. Et je n’ai aucune idée comment faire remonter cette info.&lt;/p&gt;
+
+&lt;h2 id=&quot;module-de-vérification-européen&quot;&gt;Module de vérification européen&lt;/h2&gt;
+
+&lt;p&gt;Il existe un module de vérification européen disponible à https://ec.europa.eu/taxation_customs/tin/#/check-tin qui, lui, vérifie mon numéro national correctement. 
+En fait ce site ne vérifie que la structure générale du numéro (j’imagine principalement via une somme de contrôle).&lt;/p&gt;
+</description>
+        <pubDate>Thu, 17 Jun 2021 00:00:00 +0200</pubDate>
+        <link>https://youngfrog.lavnir.be/blog/2021/06/17/hit-or-no-hit-checkdoc-tin-nif.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/blog/2021/06/17/hit-or-no-hit-checkdoc-tin-nif.html</guid>
+        
+        
+        <category>blog</category>
+        
+      </item>
+    
+      <item>
+        <title>Formulaire de contact, cookies et privacy statement... ça me gonfle.</title>
+        <description>&lt;p&gt;Suite à mon expérience récente sur le site de la Commission Européenne, je vais donc pour leur signaler un problème. 
+J’ai choisi un &lt;a href=&quot;https://ec.europa.eu/taxation_customs/contacts_en&quot;&gt;formulaire de contact&lt;/a&gt; trouvé sur le site.
+En bas du formulaire je ne vois pas de bouton “Submit”, mais je vois une case à cocher “I have read and agree with the data protection terms”. Je me dis qu’en cochant la case j’aurai un bouton submit.&lt;/p&gt;
+
+&lt;p&gt;Et là deux choses.&lt;/p&gt;
+
+&lt;p&gt;La première : en ouvrant &lt;a href=&quot;https://europa.eu/european-union/contact/data-protection_en&quot;&gt;la page&lt;/a&gt;, j’obtiens immédiatement un popup [qui veut me faire participer à une enquête à la fin de ma visite]
+ avec une case à cocher : “I have read and agree with the Privacy statement”. WHAT THE FUCK ? I4M ON THE FUCKING PAGE888. (En fait non, il s’agit d’un &lt;em&gt;autre&lt;/em&gt; &lt;a href=&quot;https://ec.europa.eu/eusurvey/home/privacystatement?language=en&quot;&gt;texte légal&lt;/a&gt; lié. Yay!)&lt;/p&gt;
+
+&lt;p&gt;La seconde chose : en fait non, même si je coche la case confirmant que j’ai lu et que je suis d’accord, je n’ai aucun moyen de soumettre le formulaire. MAIS WHAT THE ACTUAL FUCK?8888&lt;/p&gt;
+
+&lt;p&gt;Je HAIS CES CONCEPTEURS DE SITE DE MERDE. OH QUE JE LES HAIS.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 17 Jun 2021 00:00:00 +0200</pubDate>
+        <link>https://youngfrog.lavnir.be/blog/2021/06/17/formulaire-de-contact-cookies-et-privacy-statement-ca-me-gonfle.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/blog/2021/06/17/formulaire-de-contact-cookies-et-privacy-statement-ca-me-gonfle.html</guid>
+        
+        
+        <category>blog</category>
+        
+      </item>
+    
+      <item>
+        <title>espeak ferait-il buzzer mon audio ?</title>
+        <description>&lt;p&gt;Depuis que j’ai &lt;a href=&quot;/informatique/2021/05/30/motherboard-z490-a-pro-and-linux.html&quot;&gt;acheté mon ordinateur&lt;/a&gt;, 
+j’ai noté que quand je mets l’audio par défaut vers la sortie HDMI (mon écran)
+j’obtiens parfois un ou les deux effets suivants:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;son retardé par rapport à l’image&lt;/li&gt;
+  &lt;li&gt;son qui fait “scritch scritch” (je sais pas comment décrire ça autrement) ; autrefois on aurait parlé de friture sur la ligne 
+(et on aurait dit qu’on était sur écoute!)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Aujourd’hui je pense avoir trouvé un coupable : espeak.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;eSpeak, écrit en C++, est un logiciel de synthèse vocale pour l’anglais et certaines autres langues, dont le français.
+Il utilise une méthode de synthèse différente des autres moteurs libres de synthèse vocale, et a un son assez différent. Il n’est peut-être pas aussi naturel ou “fluide”, mais certains trouvent l’articulation plus claire et plus facile à écouter sur de longues périodes. 
+(Source: &lt;a href=&quot;https://doc.ubuntu-fr.org/espeak&quot;&gt;https://doc.ubuntu-fr.org/espeak&lt;/a&gt;)&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Je l’accuse parce que quand je désactive le module &lt;em&gt;espeak-dispatcher-espeak-ng&lt;/em&gt; via &lt;em&gt;pavucontrol&lt;/em&gt;, le problème disparait !&lt;/p&gt;
+
+&lt;p&gt;Je n’en sais pas beaucoup plus… à creuser.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 10 Jun 2021 00:00:00 +0200</pubDate>
+        <link>https://youngfrog.lavnir.be/informatique/2021/06/10/espeak-ferait-il-buzzer-mon-audio.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/informatique/2021/06/10/espeak-ferait-il-buzzer-mon-audio.html</guid>
+        
+        
+        <category>informatique</category>
+        
+      </item>
+    
+      <item>
+        <title>Je le savais !</title>
+        <description>&lt;p&gt;Souvent dans une discussion, on me donnera une information que je connaissais. 
+Mon réflexe premier a généralement été de répondre que &lt;em&gt;je le savais&lt;/em&gt;.
+Parfois d’aller justifier que « je l’avais dit à &lt;em&gt;tel endroit&lt;/em&gt; », ou même « c’est précisément ce que je viens de dire ».&lt;/p&gt;
+
+&lt;p&gt;Quand j’y pense, j’essaie désormais de confirmer bonne réception de l’information, et de simplement répondre « Merci. »&lt;/p&gt;
+
+&lt;p&gt;C’est vrai que je le savais, mais ça n’apporte probablement rien à personne de le savoir.&lt;/p&gt;
+</description>
+        <pubDate>Wed, 09 Jun 2021 00:00:00 +0200</pubDate>
+        <link>https://youngfrog.lavnir.be/jepensetouthaut/2021/06/09/je-le-savais.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/jepensetouthaut/2021/06/09/je-le-savais.html</guid>
+        
+        
+        <category>jepensetouthaut</category>
+        
+      </item>
+    
+      <item>
+        <title>Féminisme et beauté</title>
+        <description>&lt;p&gt;Je vois souvent des citations ou images assénant : « Quel soit votre corps, vous êtes belle ! »&lt;/p&gt;
+
+&lt;p&gt;Je crois comprendre l’idée : ne pas s’en faire pour son propre corps, s’accepter, et ne pas se laisser dicter notre façon de s’habiller/manger/etc.
+pour plaire aux autres, seulement pour se sentir bien.
+Tout cela semble parfaitement raisonnable.&lt;/p&gt;
+
+&lt;p&gt;Mais, chaque fois cela me pose question. 
+Car en disant “vous &lt;em&gt;êtes&lt;/em&gt; belle”, cela nous ramène quand même à une obligation sous-jacente de beauté, même si celle-ci est supputée acquise.&lt;/p&gt;
+
+&lt;p&gt;Cela me gêne sans doute car, pour être franc, je ne trouve pas que toutes les femmes sont belles. 
+Mais cela a-t-il la moindre importance ?&lt;/p&gt;
+</description>
+        <pubDate>Mon, 07 Jun 2021 00:00:00 +0200</pubDate>
+        <link>https://youngfrog.lavnir.be/jepensetouthaut/2021/06/07/feminisme-et-beaute.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/jepensetouthaut/2021/06/07/feminisme-et-beaute.html</guid>
+        
+        
+        <category>jepensetouthaut</category>
+        
+      </item>
+    
+      <item>
+        <title>Motherboard Z490-A PRO and Linux</title>
+        <description>&lt;p&gt;“T’inquiète ça va aller, je gère, j’utilise Linux depuis 20 ans”&lt;/p&gt;
+
+&lt;p&gt;Voilà en substance ce que j’ai dit au vendeur en achetant une machine équipe de &lt;a href=&quot;https://www.msi.com/Motherboard/support/Z490-A-PRO#down-bios&quot;&gt;la carte mère MSI Z490-A Pro&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Eh bien j’ai quand même un peu souffert.&lt;/p&gt;
+
+&lt;h1 id=&quot;le-boot&quot;&gt;Le boot&lt;/h1&gt;
+
+&lt;p&gt;D’abord quelques raccourcis: au démarrage F11 affiche le menu de boot.
+Dans le BIOS : F1 pour afficher les raccourcis supportés&lt;/p&gt;
+
+&lt;p&gt;Et au début rien ne bootait :&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;L’écran de configuration du BIOS UEFI se lançait automatiquement.&lt;/li&gt;
+  &lt;li&gt;Mes clefs USB étaient détectées mais je revenais au menu BIOS immédiatement.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Le souci était vraisemblablement que mes clefs ne sont pas adaptées au boot UEFI.&lt;/p&gt;
+
+&lt;p&gt;J’ai donc :&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Désactivé le UEFI Secure Boot (probablement utile)&lt;/li&gt;
+  &lt;li&gt;Désactivé toute forme de Fast Boot (probablement inutile)&lt;/li&gt;
+  &lt;li&gt;Switché en mode CSM (https://superuser.com/a/692040/)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;À partir de là, mes clefs bootaient et GRUB se lançait. Yay !&lt;/p&gt;
+
+&lt;p&gt;Yay ?&lt;/p&gt;
+
+&lt;p&gt;Oh… no…&lt;/p&gt;
+
+&lt;h1 id=&quot;linstallation&quot;&gt;L’installation&lt;/h1&gt;
+&lt;p&gt;Les clefs bootaient mais les écrans noirs se succédaient, quelle que soit la clef que j’utilisais (une vieille Ubuntu, un GParted disk, une trisquel)…&lt;/p&gt;
+
+&lt;p&gt;En enlevant les options “quiet splash”, je notais un souci avec le driver graphique drm nouveau: “out of mapped bounds”.
+En tentant une install en mode texte (“text” à la place de “quiet splash”), j’avais une Kernel Panic parce que le pépin ne trouvait pas son root filesystem… 
+J’en ai conclu qu’il trouvait pas la clef USB.&lt;/p&gt;
+
+&lt;p&gt;J’ai donc téléchargé les 2.6Go de la dernière Ubuntu 20.04 (LTS), et tenté le coup pour le tout. 
+J’ai utilisé usb-creator-gtk pour produire une clef USB bootable (j’avais envisagé un network boot mais finalement j’ai préféré la voie de la clef USB).&lt;/p&gt;
+
+&lt;h1 id=&quot;la-carte-réseau&quot;&gt;La carte réseau&lt;/h1&gt;
+&lt;p&gt;La magie de Ubuntu opère : ça maaaarche. 
+L’installation se passe sans encombre mais sans réseau : mon routeur est trop loin, je n’ai pas de câble jusque là, et bien sûr pas d’adaptateur Wi-Fi sur une machine fixe. 
+Qu’à cela ne tienne, je compte bien utiliseR mon laptop comme passerelle… sauf que… en fait “pas de réseau” c’est vraiment “pas de réseau” :&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lshw -C network&lt;/code&gt; me dit “NON-RÉCLAMÉ”&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lspci -K&lt;/code&gt; me dit que le module est r8169&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dmesg | grep r8169&lt;/code&gt; me dit “can’t disable ASPM; OS doesn’t have ASPM control” (&lt;a href=&quot;https://askubuntu.com/questions/372363/what-does-r8169-cant-disable-aspm-os-doesnt-have-aspm-control-really-mean&quot;&gt;https://askubuntu.com/questions/372363/what-does-r8169-cant-disable-aspm-os-doesnt-have-aspm-control-really-mean&lt;/a&gt;) et surtout “unknown chip XID 641” (&lt;a href=&quot;https://askubuntu.com/questions/1269783&quot;&gt;https://askubuntu.com/questions/1269783&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Heureusement Realtek a un driver &lt;a href=&quot;https://www.realtek.com/en/component/zoo/category/rtl8169sc-l-software&quot;&gt;https://www.realtek.com/en/component/zoo/category/rtl8169sc-l-software&lt;/a&gt;
+malheureusement/évidemment c’est un module du kernel, donc il faut les outils de compilation du kernel : gcc, make, binutils&lt;/p&gt;
+
+&lt;h1 id=&quot;installre-des-paquets-pour-compiler-sans-le-réseau&quot;&gt;Installre des paquets pour compiler, sans le réseau&lt;/h1&gt;
+
+&lt;p&gt;J’aurais sans doute dû utiliser https://doc.ubuntu-fr.org/apt-offline mais j’ai été beaucoup plus stupide que ça.&lt;/p&gt;
+
+&lt;p&gt;On peut ré-utiliser la clef usb utilisée pour l’installation de Ubuntu. Certains logiciels y sont (mais pas tous) :&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;On insère la clef (ça se monte tout seul)&lt;/li&gt;
+  &lt;li&gt;On &lt;em&gt;va&lt;/em&gt; dans le répertoire Ubuntu ainsi monté, et on crée un lien symbolique : &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ln -svr . /media/cdrom&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Dans &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/apt/source.list&lt;/code&gt; on dé-commente la ligne correspondant au cdrom (perso j’ai juste bougé le fichier et créé un fichier vide avec juste cette ligne-là) :&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;deb cdrom:[Ubuntu 20.04.1 LTS _Focal Fossa_ - Release amd64 (20200741)]/ focal main restricted
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Et zou, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;apt install gcc make binutils bzip2 coreutils libc-dev&lt;/code&gt; tourne tout seul.&lt;/p&gt;
+
+&lt;h2 id=&quot;récupérer-linux-source&quot;&gt;Récupérer linux-source&lt;/h2&gt;
+&lt;p&gt;Je me suis bêtement dit que j’aurais besoin des sources du noyau pour compiler le module de realtek… ce n’est pas complètement vrai.&lt;/p&gt;
+
+&lt;p&gt;Malgré tout, je l’ai fait, voici mes traces:&lt;/p&gt;
+
+&lt;p&gt;Je vais sur https://packages.ubuntu.com/focal/linux-source-5.4.0
+et je télécharge les 129 Mo sur ma clef USB, que je passe sur l’autre machine, et:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;dpkg -i linux-source*deb
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Et maintenant les sources sont dans &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/usr/src&lt;/code&gt;. Yay ! J’y vais en root (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo -i&lt;/code&gt;) et il faut les décompresser avec &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;tar xf linux-source*bz2&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;rha-fuck-il-faut-aussi-flex-m4-et-dautres-brols&quot;&gt;RHA FUCK il faut aussi flex, m4, et d’autres brols&lt;/h2&gt;
+
+&lt;p&gt;Bref je vais tenter autre chose : le drive de realtek est intégré au noyau depuis la version 5.9 si j’ai bien suivi&lt;/p&gt;
+
+&lt;p&gt;Après coup j’ai noté qu’avec ceci ça devrait marcher&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;libncurses-dev
+libfl-dev
+libfl2
+libsigsegv2
+m4
+bison
+build-essential
+dpkg-dev
+fakeroot
+g++
+g++-9
+libalgorithm-diff-perl
+libalgorithm-diff-xs-perl
+libalgorithm-merge-perl
+libfakeroot
+libstc++-9-dev
+autoconf
+automake
+autotools-dev
+libltdl-dev
+libtool
+libssl-dev
+libelf-dev
+zlib1g-dev
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;autoconf
+automake
+autopoint
+autotools-dev
+debhelper
+dh-autoreconf
+dh-stripnondeterminism
+dwz
+gettext
+intltool-debian
+libarchive-zip-perl
+libcroco3
+libdebhelper-perl
+libfile-stripnondeterminism-perl
+libsub-override-perl
+libtool
+linux-headers-5.4.0-26 
+linux-headers-5.4.0-26-generic
+po-debconf&lt;/p&gt;
+
+&lt;h2 id=&quot;make-oldconfig&quot;&gt;make oldconfig&lt;/h2&gt;
+&lt;p&gt;Pour récupérer la config existante, je lance &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo make oldconfig&lt;/code&gt;
+Quelques questions me sont alors posées. Puis je lance &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;make clean modules&lt;/code&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;installer-linux-kernel-59&quot;&gt;installer Linux Kernel 5.9&lt;/h1&gt;
+&lt;p&gt;Je vais donc choper un kernel 5.9
+https://ubuntuhandbook.org/index.php/2020/10/linux-kernel-5-9-released/&lt;/p&gt;
+
+&lt;p&gt;et zou, ça maaaarche&lt;/p&gt;
+
+&lt;h1 id=&quot;carte-graphique--gt-1030-rien-à-voir-avec-la-mobo&quot;&gt;Carte Graphique  GT 1030 (rien à voir avec la mobo)&lt;/h1&gt;
+&lt;p&gt;J’ai une GT 1030. Pas tout récent, pas super, mais suffisante. Par contre, en terme de driver, c’est du nvidia, donc j’ai le choix entre le driver libre &lt;em&gt;nouveau&lt;/em&gt; ou les &lt;em&gt;drivers proprios&lt;/em&gt; de nvidia.&lt;/p&gt;
+
+&lt;p&gt;Les drivers “nouveau” sont ok (des trucs s’affichent), mais pas top (pas d’accélération).&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;nvidia a publié une partie de ce qu’il faut pour que la carte fonctionne plus ou moins https://www.phoronix.com/scan.php?page=news_item&amp;amp;px=NVIDIA-GP108-Firmware&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;toutefois &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;vdpauinfo&lt;/code&gt; mentionne que plein de trucs non supportés :&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;  name                        level macbs width height
+  ----------------------------------------------------
+  MPEG1                          --- not supported ---
+  MPEG2_SIMPLE                   --- not supported ---
+  MPEG2_MAIN                     --- not supported ---
+  H264_BASELINE                  --- not supported ---
+  H264_MAIN                      --- not supported ---
+  H264_HIGH                      --- not supported ---
+  VC1_SIMPLE                     --- not supported ---
+  VC1_MAIN                       --- not supported ---
+  VC1_ADVANCED                   --- not supported ---
+  MPEG4_PART2_SP                 --- not supported ---
+  MPEG4_PART2_ASP                --- not supported ---
+  DIVX4_QMOBILE                  --- not supported ---
+  DIVX4_MOBILE                   --- not supported ---
+  DIVX4_HOME_THEATER             --- not supported ---
+  DIVX4_HD_1080P                 --- not supported ---
+  DIVX5_QMOBILE                  --- not supported ---
+  DIVX5_MOBILE                   --- not supported ---
+  DIVX5_HOME_THEATER             --- not supported ---
+  DIVX5_HD_1080P                 --- not supported ---
+  H264_CONSTRAINED_BASELINE      --- not supported ---
+  H264_EXTENDED                  --- not supported ---
+  H264_PROGRESSIVE_HIGH          --- not supported ---
+  H264_CONSTRAINED_HIGH          --- not supported ---
+  H264_HIGH_444_PREDICTIVE       --- not supported ---
+  HEVC_MAIN                      --- not supported ---
+  HEVC_MAIN_10                   --- not supported ---
+  HEVC_MAIN_STILL                --- not supported ---
+  HEVC_MAIN_12                   --- not supported ---
+  HEVC_MAIN_444                  --- not supported ---
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;du coup je vais pour installer les drivers propriétaires. 
+ça me saoule, et la prochaine fois je dois absolument être plus attentif à ça, mais tant pis.&lt;/p&gt;
+
+    &lt;ul&gt;
+      &lt;li&gt;J’ai le choix entre un fichier venant de nvidia directement :
+ https://www.nvidia.com/content/DriverDownload-March2009/confirmation.php?url=/XFree86/Linux-x86_64/381.22/NVIDIA-Linux-x86_64-381.22.run&amp;amp;lang=us&amp;amp;type=TITAN&lt;/li&gt;
+      &lt;li&gt;ou un ppa :
+https://launchpad.net/~graphics-drivers/+archive/ubuntu/ppa&lt;/li&gt;
+      &lt;li&gt;ou via l’interface Ubuntu comme expliqué ici: https://linoxide.com/linux-how-to/how-to-install-nvidia-driver-on-ubuntu/&lt;/li&gt;
+    &lt;/ul&gt;
+
+    &lt;p&gt;j’ai failli prendre la voie du ppa (d’ailleurs j’ai ajouté le ppa) et j’ai aussi installé &lt;a href=&quot;http://phoronix-test-suite.com/releases/repo/pts.debian/files/phoronix-test-suite_10.2.0_all.deb&quot;&gt;phoronix-test-suite&lt;/a&gt;
+puis finalement j’ai choisi la voie “ubuntu” (via l’interface). Je suppose que l’interface aurait ajouté le ppa si je ne l’avais pas fait. Je n’en sais trop rien. 
+Parmis les choix j’ai pris le premier : &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nvidia-driver-460 (propriétaire, testé)&lt;/code&gt;&lt;/p&gt;
+
+    &lt;p&gt;En arrière plan, cela a donc installé ceci (cf /var/log/apt/history.log) :&lt;/p&gt;
+
+    &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Start-Date: 2021-01-23  20:47:28
+Commandline: packagekit role='install-packages'
+Requested-By: youngfrog (1000)
+Install: libxdmcp6:i386 (1:1.1.3-0ubuntu1, automatic), libvulkan1:i386 (1.2.131.2-1, automatic), libdrm-nouveau2:i386 (2.4.102-1ubuntu1~20.04.1, automatic), libxcb-xfixes0:i386 (1.14-2, automatic), libnvidia-compute-460:amd64 (460.32.03-0ubuntu0.20.04.1, automatic), libnvidia-compute-460:i386 (460.32.03-0ubuntu0.20.04.1, automatic), libnvidia-encode-460:amd64 (460.32.03-0ubuntu0.20.04.1, automatic), libnvidia-encode-460:i386 (460.32.03-0ubuntu0.20.04.1, automatic), nvidia-kernel-common-460:amd64 (460.32.03-0ubuntu0.20.04.1, automatic), gcc-10-base:i386 (10.2.0-5ubuntu1~20.04, automatic), xserver-xorg-video-nvidia-460:amd64 (460.32.03-0ubuntu0.20.04.1, automatic), libpciaccess0:i386 (0.16-0ubuntu1, automatic), libnvidia-gl-460:amd64 (460.32.03-0ubuntu0.20.04.1, automatic), libnvidia-gl-460:i386 (460.32.03-0ubuntu0.20.04.1, automatic), libxcb-present0:i386 (1.14-2, automatic), libgl1:i386 (1.3.2-1~ubuntu0.20.04.1, automatic), libglapi-mesa:i386 (20.2.6-0ubuntu0.20.04.1, automatic), libnvidia-fbc1-460:amd64 (460.32.03-0ubuntu0.20.04.1, automatic), libnvidia-fbc1-460:i386 (460.32.03-0ubuntu0.20.04.1, automatic), libelf1:i386 (0.176-1.1build1, automatic), libnvidia-decode-460:amd64 (460.32.03-0ubuntu0.20.04.1, automatic), libnvidia-decode-460:i386 (460.32.03-0ubuntu0.20.04.1, automatic), libbsd0:i386 (0.10.0-1, automatic), zlib1g:i386 (1:1.2.11.dfsg-2ubuntu1.2, automatic), libc6:i386 (2.31-0ubuntu9.1, automatic), libnvidia-cfg1-460:amd64 (460.32.03-0ubuntu0.20.04.1, automatic), libxcb-randr0:i386 (1.14-2, automatic), nvidia-utils-460:amd64 (460.32.03-0ubuntu0.20.04.1, automatic), dkms:amd64 (2.8.1-5ubuntu1, automatic), libx11-6:i386 (2:1.6.9-2ubuntu1.1, automatic), nvidia-prime:amd64 (0.8.14, automatic), libexpat1:i386 (2.2.9-1build1, automatic), libcrypt1:i386 (1:4.4.10-10ubuntu4, automatic), libxshmfence1:i386 (1.3-1, automatic), nvidia-dkms-460:amd64 (460.32.03-0ubuntu0.20.04.1, automatic), libwayland-client0:i386 (1.18.0-1, automatic), libxnvctrl0:amd64 (440.82-0ubuntu0.20.04.1, automatic), libdrm-amdgpu1:i386 (2.4.102-1ubuntu1~20.04.1, automatic), libllvm11:i386 (1:11.0.0-2~ubuntu20.04.1, automatic), libxau6:i386 (1:1.0.9-0ubuntu1, automatic), libtinfo6:i386 (6.2-0ubuntu2, automatic), libxcb1:i386 (1.14-2, automatic), nvidia-compute-utils-460:amd64 (460.32.03-0ubuntu0.20.04.1, automatic), libdrm2:i386 (2.4.102-1ubuntu1~20.04.1, automatic), libnvidia-ifr1-460:amd64 (460.32.03-0ubuntu0.20.04.1, automatic), libnvidia-ifr1-460:i386 (460.32.03-0ubuntu0.20.04.1, automatic), nvidia-driver-460:amd64 (460.32.03-0ubuntu0.20.04.1), libglx0:i386 (1.3.2-1~ubuntu0.20.04.1, automatic), libxfixes3:i386 (1:5.0.3-2, automatic), libgl1-mesa-dri:i386 (20.2.6-0ubuntu0.20.04.1, automatic), libxxf86vm1:i386 (1:1.1.4-1build1, automatic), libgcc-s1:i386 (10.2.0-5ubuntu1~20.04, automatic), screen-resolution-extra:amd64 (0.18build1, automatic), libxdamage1:i386 (1:1.1.5-2, automatic), libedit2:i386 (3.1-20191231-1, automatic), libdrm-intel1:i386 (2.4.102-1ubuntu1~20.04.1, automatic), libffi7:i386 (3.3-4, automatic), libunistring2:i386 (0.9.10-2, automatic), libzstd1:i386 (1.4.4+dfsg-3, automatic), libdrm-radeon1:i386 (2.4.102-1ubuntu1~20.04.1, automatic), libnvidia-common-460:amd64 (460.32.03-0ubuntu0.20.04.1, automatic), mesa-vulkan-drivers:i386 (20.2.6-0ubuntu0.20.04.1, automatic), libatomic1:i386 (10.2.0-5ubuntu1~20.04, automatic), libstdc++6:i386 (10.2.0-5ubuntu1~20.04, automatic), libnvidia-extra-460:amd64 (460.32.03-0ubuntu0.20.04.1, automatic), libxcb-glx0:i386 (1.14-2, automatic), libxcb-dri2-0:i386 (1.14-2, automatic), libsensors5:i386 (1:3.6.0-2ubuntu1, automatic), libxcb-dri3-0:i386 (1.14-2, automatic), libidn2-0:i386 (2.2.0-2, automatic), libx11-xcb1:i386 (2:1.6.9-2ubuntu1.1, automatic), libxcb-sync1:i386 (1.14-2, automatic), nvidia-kernel-source-460:amd64 (460.32.03-0ubuntu0.20.04.1, automatic), nvidia-settings:amd64 (440.82-0ubuntu0.20.04.1, automatic), libxext6:i386 (2:1.3.4-0ubuntu1, automatic), libglx-mesa0:i386 (20.2.6-0ubuntu0.20.04.1, automatic), libglvnd0:i386 (1.3.2-1~ubuntu0.20.04.1, automatic)
+End-Date: 2021-01-23  20:48:20
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+
+    &lt;p&gt;Je redémarre et je vois ce que ça donne.&lt;/p&gt;
+
+    &lt;p&gt;Update : quelques semaines/mois plus tard, je réalise que de temps en temps quand je fais la màj, j’ai des plantages.
+Souvent un reboot suffit (pour charger le kernel qui fonctionne avec les nouveaux drivers installés),
+une fois je crois que j’ai dû ré-installer le driver propriétaire et je sais plus trop comment j’ai fait.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Sun, 30 May 2021 00:00:00 +0200</pubDate>
+        <link>https://youngfrog.lavnir.be/informatique/2021/05/30/motherboard-z490-a-pro-and-linux.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/informatique/2021/05/30/motherboard-z490-a-pro-and-linux.html</guid>
+        
+        
+        <category>informatique</category>
+        
+      </item>
+    
+      <item>
+        <title>Installer Nextcloud aux côtés de Valet for Linux</title>
+        <description>&lt;h2 id=&quot;https-et-php-fpm&quot;&gt;HTTPS et php-fpm&lt;/h2&gt;
+
+&lt;p&gt;Si on suit les instructions d’&lt;a href=&quot;https://docs.nextcloud.com/server/21/admin_manual/installation/nginx.html&quot;&gt;installation de nextcloud avec nginx&lt;/a&gt;, on se retrouve à :&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;activer HTTPS par défaut (via une redirection dans la première partie du fichier &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nginx.conf&lt;/code&gt;, et la ligne &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;fastcgi_param HTTPS on;&lt;/code&gt; dans la section ssl du fichier de configuration)&lt;/li&gt;
+  &lt;li&gt;utiliser php-fpm via la ligne &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;server 127.0.0.1:9000;&lt;/code&gt; alors que sur mon installation, un socket était utilisé par défaut&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;questions-de-propriété&quot;&gt;Questions de propriété&lt;/h2&gt;
+
+&lt;p&gt;Par ailleurs Valet configure nginx pour utiliser l’utilisateur courant (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;youngfrog&lt;/code&gt; pour ce qui me concerne).&lt;/p&gt;
+
+&lt;p&gt;Or par défaut sur mon Ubuntu c’est &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;www-data&lt;/code&gt; qui est propriétaire de &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/var/www/&lt;/code&gt;,
+et &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;php-fpm&lt;/code&gt; utilise également l’utilisateur &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;www-data&lt;/code&gt; dans le pool par défaut (voir &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/php/*/fpm/pool.d/www.conf&lt;/code&gt;).&lt;/p&gt;
+
+&lt;p&gt;J’ai tout modifié (à coup de &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;chown&lt;/code&gt; dans &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/var/www/nextcloud&lt;/code&gt; et &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/var/lib/nginx/fastcgi/&lt;/code&gt; ainsi que &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;php7.4-fpm.sock&lt;/code&gt;) pour utiliser mon utilisateur courant, comme dans valet.
+J’ai réalisé plus tard que j’aurais peut être pu utiliser le même pool php-fpm que valet. (pool.d/valet.conf)&lt;/p&gt;
+
+&lt;p&gt;L’utilisateur “nginx” doit aussi avoir accès aux espaces de &lt;a href=&quot;#external-storage&quot;&gt;stockages locaux&lt;/a&gt; définis dans nextcloud .&lt;/p&gt;
+
+&lt;h2 id=&quot;external-storage&quot;&gt;External storage&lt;/h2&gt;
+
+&lt;p&gt;L’utilisateur “nginx” doit aussi avoir accès aux espaces de stockages locaux définis dans nextcloud 
+(et, pour mémoire, il faut ajouter “External Storage” à la liste des applications, configurer globalement, puis chaque utilisateur peut l’ajouter à ses fichiers.)&lt;/p&gt;
+
+&lt;h2 id=&quot;https&quot;&gt;HTTPS&lt;/h2&gt;
+
+&lt;p&gt;Warning : this does not seem to work properly.&lt;/p&gt;
+
+&lt;p&gt;I followed this to make a self signed certificate :&lt;/p&gt;
+
+&lt;p&gt;https://medium.com/@antelle/how-to-generate-a-self-signed-ssl-certificate-for-an-ip-address-f0dd8dddf754&lt;/p&gt;
+
+&lt;p&gt;Named the files as &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/ssl/nginx/nc-{cert,key}.pem&lt;/code&gt;. 
+I notice that Firefox warns me about it being a self-signed certificate, but does not warn about the IP being the wrong one (e.g. if I use 127.0.0.1 instead of 192.168.2.30 [which is the IP I wrote in the certificate]) IOW it doesn’t seem to work correctly.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 08 Mar 2021 00:00:00 +0100</pubDate>
+        <link>https://youngfrog.lavnir.be/informatique/2021/03/08/nextcloud-and-valet-une-union-difficile.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/informatique/2021/03/08/nextcloud-and-valet-une-union-difficile.html</guid>
+        
+        
+        <category>informatique</category>
+        
+      </item>
+    
+      <item>
+        <title>Firefox : container tabs / onglets contextuels</title>
+        <description>&lt;h2 id=&quot;contexte&quot;&gt;Contexte&lt;/h2&gt;
+
+&lt;p&gt;J’avais installé il y a longtemps &lt;a href=&quot;https://addons.mozilla.org/fr/firefox/addon/facebook-container&quot;&gt;Facebook Container&lt;/a&gt;, qui permet de cloisonner Facebook par rapport au reste.&lt;/p&gt;
+
+&lt;p&gt;Ceci implique d’avoir activé une fonctionnalité : les &lt;strong&gt;onglets contextuels&lt;/strong&gt;. Facebook vit alors dans son propre “contexte”, et il a donc moins l’occasion de m’espionner quand je surfe sur d’autres sites. (En particulier les boutons “Like” ou “Share on Facebook” ne fonctionnent plus mais c’est une fonctionnalité, pas un bug.)&lt;/p&gt;
+
+&lt;p&gt;Il existe également d’autres contextes par défaut, mais rien n’oblige à les utiliser (les onglets sans contexte partagent un contexte commun), et on peut en créer d’autres.
+J’en utilise actuellement trois :&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;perso,&lt;/li&gt;
+  &lt;li&gt;pro, et&lt;/li&gt;
+  &lt;li&gt;facebook.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;J’aime bien ; c’est un peu entre la &lt;em&gt;navigation privée&lt;/em&gt; (transiente) et les &lt;em&gt;profils multiples&lt;/em&gt; (cloisonnement très strict, notamment pas de partage au niveau des mots de passe).&lt;/p&gt;
+
+&lt;p&gt;Cela permet notamment que quand je me connecte à gmail dans le contexte Pro, ça ouvre mon compte gmail “pro”.
+Gmail, sinon, gère les identités multiples (notamment via le paramètre d’URL &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;authuser&lt;/code&gt;), mais c’est facile de se mélanger les pinceaux. 
+Par exemple, si on ouvre un lien vers “Google Drive”, il est possible que le authuser soit incorrect, et alors il faut intervenir manuellement et/ou changer explicitement de compte&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;. Moins de souci avec les contextes : il suffit d’ouvrir l’URL dans le bon contexte, et dans ce contexte n’être connnecté qu’à un seul compte Gmail.&lt;/p&gt;
+
+&lt;h2 id=&quot;mes-soucis-et-mes-solutions&quot;&gt;Mes soucis et mes solutions&lt;/h2&gt;
+
+&lt;p&gt;Je n’ai pas vu de raccourci clavier pour ouvrir facilement une url dans un contexte spécifique. (J’ai bien un menu “Fichier -&amp;gt; Nouvel onglet contextuel”.)&lt;/p&gt;
+
+&lt;p&gt;⇒ J’ai installé &lt;a href=&quot;https://addons.mozilla.org/firefox/addon/multi-account-containers/&quot;&gt;Multi-Account Containers&lt;/a&gt; qui offre des raccourcis (par défaut &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C-M-1&lt;/code&gt;, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C-M-2&lt;/code&gt;, etc.) pour ouvrir un onglet dans un contexte spécifique.&lt;/p&gt;
+
+&lt;p&gt;J’espérais également que tout soit contextualisé : je n’ai plus envie d’ouvrir
+un lien sans avoir choisi un contexte au préalable. Il y a bien une option
+“Sélectionner un contexte pour chaque nouvel onglet” (en anglais : “Select a
+container for each new tab”) mais&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;ce n’est pas une obligation (on peut toujours choisir “sans contexte”),&lt;/li&gt;
+  &lt;li&gt;l’effet est visible en cliquant sur ‘+’ pour créer un nouvel onglet, mais le raccourci &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C-t&lt;/code&gt; n’est pas affecté par ce paramètre (c’est un bug, &lt;a href=&quot;https://github.com/mozilla/multi-account-containers/issues/462&quot;&gt;d’après moi et d’autres&lt;/a&gt;)&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;⇒ On peut utiliser un addon comme &lt;a href=&quot;https://addons.mozilla.org/fr/firefox/addon/always-in-container/&quot;&gt;https://addons.mozilla.org/fr/firefox/addon/always-in-container/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;⇒ Plus complexe, l’addon &lt;a href=&quot;https://addons.mozilla.org/en-US/firefox/addon/conex/&quot;&gt;conex&lt;/a&gt; s’arrange notamment pour que &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C-t&lt;/code&gt; ouvre dans le contexte courant.&lt;/p&gt;
+
+&lt;h2 id=&quot;documentation&quot;&gt;Documentation&lt;/h2&gt;
+
+&lt;p&gt;J’ai trouvé de la documentation&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;
+(&lt;a href=&quot;https://support.mozilla.org/fr/kb/onglets-contextuels-avec-les-containers&quot;&gt;fr&lt;/a&gt;,
+&lt;a href=&quot;https://support.mozilla.org/en-US/kb/containers&quot;&gt;en&lt;/a&gt;) et elle fait référence à l’addon &lt;a href=&quot;https://addons.mozilla.org/firefox/addon/multi-account-containers/&quot;&gt;Multi-Account
+Containers&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;La raison pour cela est que le contexte est dans le cœur de Firefox, mais les
+fonctionnalités user-firendly sont disponibles via diverses extensions, dont
+celle-là (voir
+&lt;a href=&quot;https://blog.mozilla.org/tanvi/2017/10/03/update-firefox-containers/&quot;&gt;https://blog.mozilla.org/tanvi/2017/10/03/update-firefox-containers/&lt;/a&gt;)&lt;/p&gt;
+
+&lt;p&gt;On trouvera aussi des infos sur &lt;a href=&quot;https://wiki.mozilla.org/Security/Contextual_Identity_Project/Containers&quot;&gt;le wiki
+Mozilla&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;les-raccourcis-dans-firefox&quot;&gt;Les raccourcis dans Firefox&lt;/h2&gt;
+
+&lt;p&gt;(Cette section n’est pas vraiment spécifique aux contextes, et mériterait probablement un post à part entière.)&lt;/p&gt;
+
+&lt;p&gt;Les raccourcis dans FF, quelle misère !&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Il y a souvent des raccourcis d’extensions qui ne marchent pas parce qu’ils
+sont déjà utilisés par Firefox (que j’ai en français, donc les menus sont
+accessibles via des raccourcis différents de la version anglaise).
+Heureusement les raccourcis d’extensions sont modifiables via &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C-S-a&lt;/code&gt; puis,
+dans l’engrenage en haut à droite, « Gérer les raccourcis d’extension ».&lt;/li&gt;
+  &lt;li&gt;Multi-Account Containers utilise &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C-.&lt;/code&gt; par défaut pour ouvrir son menu, sauf
+que ça ne marche pas pour moi. Je ne sais pas si c’est parce que j’utilise une
+disposition Azerty (le point s’obtient en pressant &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;S-;&lt;/code&gt;) ou si c’est lié au
+fait que mon FF est en français, ou peut-être que c’est un raccourci réservé ?&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Si je modifie ce raccourci pour mettre &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C-.&lt;/code&gt; (= &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C-S-;&lt;/code&gt;), Firefox pense que
+j’appuie sur &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Ctrl+Maj+Comma&lt;/code&gt;… sauf que du coup, je dois vraiment appuyer
+sur &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C-S-,&lt;/code&gt; pour que ça marche !&lt;/p&gt;
+
+    &lt;p&gt;Je répète : j’appuie une combinaison de
+touche pour définir le raccourci, mais cette même combinaison n’est pas
+reconnue pour déclencher le raccourci !&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.gnu.org/software/emacs/&quot;&gt;GNU Emacs&lt;/a&gt; possède notamment une fonctionnalité qui me manque terriblement dans la plupart des logiciels que j’utilise, y compris Firefox et Gnome : c’est la possibilité de &lt;a href=&quot;https://www.gnu.org/software/emacs/manual/html_node/emacs/Key-Help.html#Key-Help&quot;&gt;décrire n’importe quel raccourci&lt;/a&gt;. Cela fonctionne très simplement : j’appuie sur &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;C-h k&lt;/code&gt; (press ctrl, press h, release both, press k, release k), puis je tape un raccourci clavier, ou je clique sur un menu ou sur un bouton et BIM! je sais quelle fonction est appelée et ce que ça fait !&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Certaines applications Google ne permettent pas de changer explicitement
+de compte, comme par exemple le partage de calendrier. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Le fait que “Container tabs” soit traduit en “Onglets contextuels” n’aide
+pas à trouver de la doc en anglais quand on a Firefox en français. (Chercher
+“Contextual tabs” n’aide absolument pas.) D’habitude je m’en sors en allant
+sur la page en français puis en changeant la langue vers l’anglais, mais ici
+ça donne une 404. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Thu, 31 Dec 2020 00:00:00 +0100</pubDate>
+        <link>https://youngfrog.lavnir.be/informatique/2020/12/31/firefox-container-tabs-onglets-contextuels.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/informatique/2020/12/31/firefox-container-tabs-onglets-contextuels.html</guid>
+        
+        
+        <category>informatique</category>
+        
+      </item>
+    
+  </channel>
+</rss>
