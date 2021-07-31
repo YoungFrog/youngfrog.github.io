@@ -22,7 +22,7 @@ target=_site # This is a constant : jekyll uses _site
 if [ -e "$target" ]; then
     warn "$target already exists."
     tree "$target"
-    confirm
+    #confirm
 fi
 
 # clean & build
