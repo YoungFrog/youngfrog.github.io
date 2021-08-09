@@ -4,9 +4,10 @@ title: "Custom domain / Domaine personnalisé vers Github pages"
 categories: informatique
 summary: "Comment ai-je défini un domaine personnalisé qui pointe vers mon site (publié au travers de Github pages)."
 ---
-Mes écrits sont désormais disponibles depuis [youngfrog.lavnir.be](https://youngfrog.lavnir.be) au lieu de [youngfrog.github.io](https://youngfrog.github.io). J'explique comment j'ai fait : c'est très simple, et ça coûte précisément le prix du nom de domaine.
+Mes écrits sont désormais disponibles depuis [youngfrog.lavnir.be](https://youngfrog.lavnir.be) au lieu de [youngfrog.github.io](https://youngfrog.github.io). 
+J'explique comment j'ai fait : c'est très simple, et ça coûte précisément le prix du nom de domaine.
 
-Dans mon cas le nom de domaine est `lavnir.be`  (mélange un peu subtile des initiales de ma moitié et de la sienne), il coûte quelques euros par an (le prix dépend essentiellement du TLD ; dans mon cas c'est `be` et ça revient à 8.46€ par an.)
+Dans mon cas le nom de domaine est `lavnir.be`  (mélange un peu subtile des initiales de ma moitié et de la sienne), il coûte quelques euros par an (le prix dépend essentiellement du TLD ; dans mon cas c'est `be` et ça revient à [8.46€ par an TTC]({% post_url 2021-08-09-acheter-un-nom-de-domaine-be %}).)
 
 Alors, la recette ?! Voilà :
 
