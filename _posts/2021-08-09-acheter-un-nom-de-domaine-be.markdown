@@ -26,10 +26,12 @@ Dans la liste ci-dessus, certains liens sont morts ou n'annoncent pas directemen
 ### D'autres prix, plutôt bof.
 
 Chez [Behostings](https://www.behostings.com/client/cart.php?a=add&domain=register) ils annoncent 6.99€/an (aussi HTVA, comme ovh), mais ils écrivent en petit un renouvellement à 8.99€/an. Je trouve ça pas réglo :
-  ![capture d'écran du prix chez behostings.com](2021-08-09-acheter-un-nom-de-domaine-be/Screenshot 2021-08-11 at 11-09-36 Votre panier - Behostings com.png)
+
+  ![capture d'écran du prix chez behostings.com](/pics/Screenshot 2021-08-11 at 11-09-36 Votre panier - Behostings com.png)
+
   Par ailleurs leurs formules d'hébergement à partir de 65€/mois c'est exagéré, sans compter 49€ de frais de configuration. HTVA bien sûr.
 
-Chez [Domains Reseller](https://www.domains-reseller.be/cart.php?a=view) ils font 6.15€/mois HTVA. Idem pour le renouvellement. Cela semble donc correct niveau prix. Par contre leur site me laisse une mauvaise impression (par rapport à <https://www.siteplan.be>)
+Chez [Domains Reseller](https://www.domains-reseller.be/cart.php?a=view) ils font 6.15€/mois HTVA. Idem pour le renouvellement. Cela semble donc correct niveau prix. Par contre leur site me laisse une mauvaise impression.
 
 De façon amusante, les sites d'achat de domaine de ces deux registrars (Behostings et Domains Resseller) se ressemblent étrangement. En fait ils ont acheté une solution toute faite <https://www.whmcs.com/pricing/>. Cela n'est pas forcément mal, mais je suis pas emballé.
 
