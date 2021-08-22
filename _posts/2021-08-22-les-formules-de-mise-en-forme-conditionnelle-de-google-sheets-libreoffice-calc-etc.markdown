@@ -43,6 +43,8 @@ La documentation mentionne cela explicitement mais c'est contre-intuitif :
 
 Donc au lieu d'écrire `'sheetname'!cell` il faut écrire `INDIRECT("'sheetname'!cell")`.
 
+Un exemple que j'ai écrit : `=VLOOKUP($A2;INDIRECT("'Cotes 2020-2021'!$A$13:$AE$383");29+COLUMN()-4;FALSE)<>""` -- Je n'en suis pas particulièrement fier, mais je suis content que ça marche.
+
 Ceci implique notamment qu'on n'a pas les références relative. C'est généralement raisonnable comme restriction puisqu'on pioche dans une autre feuille, mais si on a un besoin particulier, il suffit d'utiliser les fonctions `ROW()` et `COLUMN()` pour construire la référence. Par exemple `INDIRECT("'sheetname'!A" & ROW())` va aller piocher la valeur dans la colonne A de la feuille sheetname, à la ligne correspondant à la ligne courante.
 
 ## Le mécanisme habituel de copiage de formule : références relatives et absolues.
