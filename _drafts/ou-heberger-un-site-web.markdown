@@ -35,7 +35,12 @@ Gitlab Pages sur gitlab.com : site statique gratuit
 
 Github Pages : site statique gratuit
 
-Netlify : site statique, avec des possibilités pour évoluer. Le plan de base est gratuit et permet de simplement téléverser un répertoire contenant un index.html.
+Netlify : site statique gratuit avec le plan de base, mais avec des incitants (j'ai oublié lesquels) pour prendre des plans plus avancés
+
+
+
+
+
 
 Heroku : plan gratuit : site dynamique, y compris base de donnée Postgres, voir par exemple le [Getting started with PHP](https://devcenter.heroku.com/articles/getting-started-with-php), ou plus spécifiquement [avec Laravel](https://devcenter.heroku.com/articles/getting-started-with-laravel), à quoi il faut ajouter les [articles sur Postgres](https://devcenter.heroku.com/articles/heroku-postgresql), et notamment le [lien entre Postgres et Laravel](https://devcenter.heroku.com/articles/heroku-postgresql#connecting-with-laravel).
 
