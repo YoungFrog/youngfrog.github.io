@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Netbeans, maven, jansi et des bugs"
-categories: jepensetouthaut informatique
+categories: informatique
 # featured-image: 
 # featured-source: 
 summary: "Au fil du temps j'ai noté des bugs avec Netbeans... je les consigne ici"
