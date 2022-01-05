@@ -37,7 +37,11 @@ Un package NPM c'est souvent quelque chose publié sur la NPM registry, mais ça
 
 Par exemple on peut simplement faire un dépôt git contenant le package. On peut aussi créer un package sous forme de tarball, par exemple via [`npm pack`](https://docs.npmjs.com/cli/v8/commands/npm-pack).
 
-On peut définir des scripts qui vont être [lancés automatiquement quand on "pack" ou "publish"](https://docs.npmjs.com/cli/v8/using-npm/scripts) -- j'imagine que l'option "faire un dépôt git" est donc bof si on veut utiliser ces scripts.
+On peut définir des scripts qui vont être [lancés automatiquement quand on "pack" ou "publish"](https://docs.npmjs.com/cli/v8/using-npm/scripts) -- ~~j'imagine que l'option "faire un dépôt git" est donc bof si on veut utiliser ces scripts.~~ en particulier le script `prepare` est exécuté quand on [installe le paquet](https://docs.npmjs.com/cli/v8/using-npm/scripts#life-cycle-scripts), notamment à partir d'un dépôt git :
+
+> NOTE: If a package being installed through git contains a prepare script, its
+> dependencies and devDependencies will be installed, and the prepare script
+> will be run, before the package is packaged and installed.
 
 
 ## Sources
