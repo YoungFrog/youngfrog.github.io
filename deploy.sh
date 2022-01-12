@@ -37,15 +37,15 @@ cd "$target" || die "Could not cd to target: $target"
 # make sure jekyll won't run on the github side
 touch .nojekyll
 
-git init &&
+git init -b main &&
 git add -A &&
 git commit -m 'deploy' || die "Could not commit"
 
 # if you are deploying to https://<USERNAME>.github.io
-# git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
+# git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git main
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:YoungFrog/youngfrog.github.io master:gh-pages ||
+git push -f git@github.com:YoungFrog/youngfrog.github.io main:gh-pages ||
     die "Could not force push to github"
 
 rm -rf "$target"
