@@ -52,12 +52,30 @@ EUR1
 +++000/0000/00097+++
 ```
 
+On peut en faire un QR code avec [qrencode](https://fukuchi.org/works/qrencode/index.html.en). 
+Pour le fun voilà pour copier-coller (la première ligne sert à évincer les commentaires, compiler dans qrencode et afficher le résultat) :
+``` sh
+sed -E 's/ +#.*//' <<EOF | qrencode -l M -o - | display -
+BCD                     # 1. service tag (fixé)
+002                     # 2. numéro de version
+1                       # 3. encodage UTF8
+SCT                     # 4. code d'identification (fixé)
+                        # 5. BIC (optionnel car version 002)
+Red Cross of Belgium    # 6. nom du bénéficiaire
+BE72000000001616        # 7. IBAN
+EUR1                    # 8. Montant
+                        # 9. Purpose
++++000/0000/00097+++    # 10. Communication structurée
+EOF
+```
 
-On peut en faire un QR code avec [qrencode](https://fukuchi.org/works/qrencode/index.html.en) ce qui donne le QR code suivant :
+ce qui donne le QR code suivant :
 
 ![QR code for donating 1€ to Red Cross of Belgium](/pics/donate-to-red-cross.png)
 
 à scanner depuis une application banquaire (testé avec Easy Banking de BNP Paribas/Fortis).
+
+
 
 ## Sources 
 - <https://fr.community.bnpparibasfortis.be/easy-banking-47/epc-qr-code-sur-iphone-5736> -- où j'ai trouvé un début d'information concerné les communications structurées
