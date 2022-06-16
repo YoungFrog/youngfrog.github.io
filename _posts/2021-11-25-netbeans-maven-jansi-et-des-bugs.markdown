@@ -46,13 +46,12 @@ jansi a été intégré à Maven avec Maven 3.5.0 ; et ce Maven a été intégr�
 À ma connaissance le bug n'est pas résolu depuis.
 
 ## Ressources
-- 
-- https://issues.apache.org/jira/browse/MNG-6205?focusedCommentId=15956355&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-15956355 (j'ai réalisé le fix en lisant ceci)
-- https://stackoverflow.com/questions/26425981/colored-output-in-netbeans-console-with-ansicodes/51508523#51508523
-- https://issues.apache.org/jira/browse/NETBEANS-3047
-- https://issues.apache.org/jira/browse/MNG-6417
+- <https://issues.apache.org/jira/browse/MNG-6205?focusedCommentId=15956355&page=com.atlassian.jira.plugin.system.issuetabpanels:comment-tabpanel#comment-15956355> (j'ai réalisé le fix en lisant ceci)
+- <https://stackoverflow.com/questions/26425981/colored-output-in-netbeans-console-with-ansicodes/51508523#51508523>
+- <https://issues.apache.org/jira/browse/NETBEANS-3047> -- il faudrait transférer ce bug vers [github](https://github.com/apache/netbeans/issues/new)
+- <https://issues.apache.org/jira/browse/MNG-6417>
 
- 
+
 <!-- Ressources internes:
 https://groups.google.com/u/0/a/he2b.be/g/esi-dev2-list/c/Pzjiioj0_T8/m/4GlJ0AQFAwAJ
 -->
@@ -69,20 +68,24 @@ System.out.print("Say something: ");
 
 ## Fix 
 
+Résolu dans Netbeans 14 !
+
 Le fix est d'utiliser une version pas trop vieille de jansi (after 1.3.2 si j'ai bien compris).
 Copier le fichier .jar devrait marcher.
-L'alternative est de ne pas utiliser jansi du tout, comme dans le point précédent
+Une autre option est de ne pas utiliser jansi du tout, comme dans le point précédent
+
+
 
 ## Ressources
 
-https://mvnrepository.com/artifact/org.fusesource.jansi/jansi -- le jar est dispo
-https://github.com/fusesource/jansi/
-https://fusesource.github.io/jansi/download.html -- je pense que ce sont les anciennes releases
-https://github.com/mojohaus/exec-maven-plugin/issues/159
-https://github.com/mojohaus/exec-maven-plugin/issues/155
-https://github.com/mojohaus/exec-maven-plugin/issues/154
-https://issues.apache.org/jira/browse/NETBEANS-4453
-https://issues.apache.org/jira/browse/MNG-6239
+- <https://mvnrepository.com/artifact/org.fusesource.jansi/jansi> -- le jar est dispo
+- <https://github.com/fusesource/jansi/>
+- <https://fusesource.github.io/jansi/download.html> -- je pense que ce sont les anciennes releases
+- <https://github.com/mojohaus/exec-maven-plugin/issues/159>
+- <https://github.com/mojohaus/exec-maven-plugin/issues/155>
+- <https://github.com/mojohaus/exec-maven-plugin/issues/154>
+- <https://issues.apache.org/jira/browse/NETBEANS-4453>
+- <https://issues.apache.org/jira/browse/MNG-6239>
 
 <!-- https://groups.google.com/u/0/a/he2b.be/g/esi-dev2-list/c/yOZlTi4qtyQ/m/zrbW_8T_AwAJ -->
 
@@ -142,4 +145,5 @@ Hors Netbeans c'est l'encodage UTF8 utilisé.Sous Netbeans on dirait de l'UTF16,
 
 
 ## Fix
-Ben je sais pas, à part ne pas lancer sous Netbeans+Maven
+
+Ceci est corrigé avec Netbeans 14 !

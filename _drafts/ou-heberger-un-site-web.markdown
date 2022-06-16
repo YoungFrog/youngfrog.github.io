@@ -10,8 +10,8 @@ summary: ""
 Quels critères à prendre en compte pour héberger son site ?
 
 J'ai en tête :
-- Le prix (la gratuit est agréable, surtout pour de petits sites sans prétention)
-- technologies côté serveur (PHP) et bases de données (MariaDB, etc.) -- stack LAMP
+- Le prix (la gratuité est agréable, surtout pour de petits sites sans prétention)
+- technologies côté serveur (PHP) et bases de données (MariaDB, etc.)
 - L'accès SSH
 
 ## Quelques idées.
@@ -29,6 +29,8 @@ J'ai en tête :
 
 - <https://siteplan.be/webhosting/> : à 39.95€/an (3.33€ par mois), y compris un nom de domaine, c'est vraiment pas cher il me semble.
 
+- <https://alwaysdata.com/> : pour 100Mo, gratuit comprenant PHP (ou d'autres, comme Node) et une DB MySQL.
+
 ### Hébergement façon PaaS [^1]
 
 Gitlab Pages sur gitlab.com : site statique gratuit
@@ -37,12 +39,10 @@ Github Pages : site statique gratuit
 
 Netlify : site statique gratuit avec le plan de base, mais avec des incitants (j'ai oublié lesquels) pour prendre des plans plus avancés
 
-
-
-
-
-
 Heroku : plan gratuit : site dynamique, y compris base de donnée Postgres, voir par exemple le [Getting started with PHP](https://devcenter.heroku.com/articles/getting-started-with-php), ou plus spécifiquement [avec Laravel](https://devcenter.heroku.com/articles/getting-started-with-laravel), à quoi il faut ajouter les [articles sur Postgres](https://devcenter.heroku.com/articles/heroku-postgresql), et notamment le [lien entre Postgres et Laravel](https://devcenter.heroku.com/articles/heroku-postgresql#connecting-with-laravel).
+
+Render : similaire à Heroku, également avec des hébergements partiellement gratuits <https://render.com/pricing>
+
 
 [Firebase Hosting](https://firebase.google.com/docs/hosting?hl=en) semble offrir un service similaire chez Google. Je n'ai pas tenté. Je pense que Firebase hosting est (un peu) différent de "Firebase" tout seul et je me suis paumé dans la doc.
 
