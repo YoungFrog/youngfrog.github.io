@@ -1,0 +1,21 @@
+---
+layout: post
+title: "Tenda U12 AC1300"
+categories: informatique
+# featured-image: 
+# featured-source: 
+summary: ""
+---
+
+Pour utiliser [cet adaptateur Wi-Fi](https://www.tendacn.com/product/U12.html)
+j'ai fini par cloner ce dépôt :
+
+<https://github.com/andriytk/rtl8812au/tree/fix-build-on-5.15>
+
+et suivre les instructions.
+
+Toutes mes autres tentatives (driver officiel, drive dans le dépôt se soldaient par des soucis de compilation.
+
+
+bug sur launchpad: 
+<https://bugs.launchpad.net/ubuntu/+source/rtl8812au/+bug/1927817>
