@@ -19,3 +19,16 @@ Toutes mes autres tentatives (driver officiel, drive dans le dépôt se soldaien
 
 bug sur launchpad: 
 <https://bugs.launchpad.net/ubuntu/+source/rtl8812au/+bug/1927817>
+
+
+## UPDATE
+
+D'après https://linux-hardware.org/?id=usb:2604-0012 (j'ai envoyé une "probe" de [mon système](https://linux-hardware.org/?probe=b40a6c6b15)) on trouve 4 dépôts pertinents :
+
+- https://github.com/abperiasamy/rtl8812AU_8821AU_linux : j'avais tenté  mais souci de compilation
+- https://github.com/aircrack-ng/rtl8812au : pas tenté
+- https://github.com/gnab/rtl8812au : tenté aussi, mais souci de compilation (résolu dans celui de andriytk)
+- https://github.com/gordboy/rtl8812au : pas tenté, et redirige désormais vers https://github.com/morrownr/8812au -- cette personne semble en connaître un morceau. il y a notamment une liste de produits suggérés si on veut du USB-WiFi : https://github.com/morrownr/USB-WiFi
+
+
+J'en ai pr
