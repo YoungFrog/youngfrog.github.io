@@ -38,4 +38,4 @@ J'ai aussi envisagé ceci pour donner accès au socket mysql directement :
 
     docker run -v /var/run/mysqld:/var/run/mysqld (...)
 
-mais ça ne marche pas tel quel (il faut sans doute configurer Laravel pour utiliser le socket).
+mais ça ne marche pas tel quel (il faut sans doute configurer Laravel pour utiliser le socket). Source: <https://saravanaj.github.io/2020/01/09/sharing-a-mysql-database-across-docker-containers/>
