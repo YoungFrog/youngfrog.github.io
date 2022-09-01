@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Le journal de YoungFrog</title>
+    <description>Les errements de ma pensée, parfois nus, parfois enrobés. Mes écrits n'engagent que ceux qui y croient, mais pas trop.</description>
+    <link>https://youngfrog.lavnir.be/</link>
+    <atom:link href="https://youngfrog.lavnir.be/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Thu, 01 Sep 2022 14:40:13 +0200</pubDate>
+    <lastBuildDate>Thu, 01 Sep 2022 14:40:13 +0200</lastBuildDate>
+    <generator>Jekyll v4.1.1</generator>
+    
+      <item>
+        <title>PHP8 without PHP8, thanks to Docker </title>
+        <description>&lt;p&gt;Sur ma machine j’ai une application en PHP7, ce qui fait que je ne veux pas màj PHP globalement, 
+et là je voudrais lancer une application qui a besoin de PHP8 (c’est un Laravel récent).&lt;/p&gt;
+
+&lt;p&gt;Docker à la rescousse !&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run --rm --interactive --tty --volume $PWD:/app --user $(id -u):$(id -g) composer install
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;va récupérer l’image &lt;a href=&quot;https://hub.docker.com/_/composer/&quot;&gt;composer:latest&lt;/a&gt; et installer tout ce qu’il faut ! Ensuite pour lancer&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run --network=host -it --rm -v &quot;$PWD:/app&quot; -w /app php:latest php artisan serve
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;va lancer le script artisan. Si besoin de mysql, il faut utiliser une image&lt;/p&gt;
+
+&lt;p&gt;J’ai utilisé un Dockerfile&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;FROM php:latest
+RUN docker-php-ext-install -j$(nproc) pdo_mysql
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;et après &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;docker build&lt;/code&gt;, j’ai pu lancer cette image-là (l’identifiant est donné après le build) à la place de &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;php:latest&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;varia&quot;&gt;varia&lt;/h2&gt;
+
+&lt;p&gt;Si on n’utilise pas le &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--network=host&lt;/code&gt;, il faut alors forwarder un port et dire à artisan d’accepter les connexions depuis l’extérieur, par exemple&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run -p 8000:8000 -it --rm -v &quot;$PWD:/app&quot; -w /app php:latest php artisan serve --host=0.0.0.0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;J’ai aussi envisagé ceci pour donner accès au socket mysql directement :&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run -v /var/run/mysqld:/var/run/mysqld (...)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;mais ça ne marche pas tel quel (il faut sans doute configurer Laravel pour utiliser le socket). Source: &lt;a href=&quot;https://saravanaj.github.io/2020/01/09/sharing-a-mysql-database-across-docker-containers/&quot;&gt;https://saravanaj.github.io/2020/01/09/sharing-a-mysql-database-across-docker-containers/&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 01 Sep 2022 00:00:00 +0200</pubDate>
+        <link>https://youngfrog.lavnir.be/informatique/2022/09/01/php8-without-php8-thanks-to-docker.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/informatique/2022/09/01/php8-without-php8-thanks-to-docker.html</guid>
+        
+        
+        <category>informatique</category>
+        
+      </item>
+    
+      <item>
+        <title>WebCam USB</title>
+        <description>&lt;p&gt;J’ai une webcam USB.
+“Webee” et “Urban factory” sont écrits sur la boîte,
+ainsi que “Lentille 3.6mm” et connexion “USB 2.0/ USB 3.0”.&lt;/p&gt;
+
+&lt;p&gt;lsusb donne :&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Bus 001 Device 035: ID 0c46:636b WaveRider Communications, Inc. USB 2.0 Camera
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;C’est marqué 2.0 là… bon admettons. Elle est “UVC”. ça a l’air standard.&lt;/p&gt;
+
+&lt;p&gt;Elle fonctionne à peu près OOTB… mais parfois j’ai ça (pas glop) :&lt;/p&gt;
+
+&lt;p&gt;[[/pics/2022-07-09-faulty.png]]&lt;/p&gt;
+
+&lt;p&gt;et par fois j’ai ça (ok) :&lt;/p&gt;
+
+&lt;p&gt;[[/pics/2022-07-09-good.png]]&lt;/p&gt;
+
+&lt;p&gt;et je comprends pas pourquoi.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 10 Jul 2022 00:00:00 +0200</pubDate>
+        <link>https://youngfrog.lavnir.be/informatique/2022/07/10/webcam-usb.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/informatique/2022/07/10/webcam-usb.html</guid>
+        
+        
+        <category>informatique</category>
+        
+      </item>
+    
+      <item>
+        <title>nginx + docker = ♥</title>
+        <description>&lt;h1 id=&quot;howto&quot;&gt;HOWTO&lt;/h1&gt;
+
+&lt;p&gt;Je suis les instructions ici :
+&lt;a href=&quot;https://hub.docker.com/r/jwilder/nginx-proxy&quot;&gt;https://hub.docker.com/r/jwilder/nginx-proxy&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;le-principe&quot;&gt;Le principe&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Problème : On veut lancer des sites web variés mais on ne veut pas configurer Nginx.&lt;/li&gt;
+  &lt;li&gt;Solution : On se dit qu’on va lancer chaque site dans son conteneur Docker.&lt;/li&gt;
+  &lt;li&gt;Problème : on n’a qu’un seul port 80 à disposition. Vers quel conteneur va-t-on rediriger les requêtes ?&lt;/li&gt;
+  &lt;li&gt;Solution : on va mettre en place des vhosts,…&lt;/li&gt;
+  &lt;li&gt;Problème : zut, il faut alors quand même configurer un nginx sur la machine hôte ?!&lt;/li&gt;
+  &lt;li&gt;Solution : Eh non ! On va conteneuriser (?) ce nginx ! Et en plus… c’est déjà fait ! Il s’appelle nginx-proxy&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Bref on  va lancer un conteneur nginx frontal qui va dispatcher les requêtes vers le bon conteneur en fonction d’un vhost. Voir le joli schéma ici : https://dimuthukasunwp.github.io/Articles/Hosting-multiple-sites-or-applications-using-Docker-and-NGINX-reverse-proxy-with-Letsencrypt-SSL.html&lt;/p&gt;
+
+&lt;h2 id=&quot;première-étape--lancer-le-nginx-frontal&quot;&gt;Première étape : lancer le nginx “frontal”&lt;/h2&gt;
+
+&lt;p&gt;Lancer sur le serveur (dans mon cas, un VPS OVH avec Docker-sur-Debian10 pré-installé) :&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run -d -p 80:80 -v /var/run/docker.sock:/tmp/docker.sock:ro jwilder/nginx-proxy
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Ceci indique simplement de :&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;exécuter l’image &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jwilder/nginx-proxy&lt;/code&gt; (qui sera rapatriée du Docker Hub),&lt;/li&gt;
+  &lt;li&gt;exposer le port 80 sur le port 80, et&lt;/li&gt;
+  &lt;li&gt;monter &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/var/run/docker.sock&lt;/code&gt; (sur la machine hôte) sur &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/tmp/docker.sock&lt;/code&gt; (dans le conteneur docker) pour que le conteneur puisse avoir toute l’info sur les autres conteneurs qui seront lancés.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;seconde-étape--configurer-le-dns&quot;&gt;Seconde étape : configurer le DNS&lt;/h2&gt;
+
+&lt;p&gt;A priori on aimerait que le domaine &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mon.domaine.top&lt;/code&gt; résolve vers l’IP de la machine.&lt;/p&gt;
+
+&lt;p&gt;Pour mon tests, j’ai simplement ajouté une ligne contenant &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ip-de-mon-serveur mon.domaine.top&lt;/code&gt; dans mon &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/etc/hosts&lt;/code&gt; (sur ma machine client).
+De la sorte, pas besoin de configurer un vrai nom de domaine juste pour tester.&lt;/p&gt;
+
+&lt;p&gt;À partir de ceci, on doit avoir une erreur 503 en se connectant à &lt;a href=&quot;http://mon.domaine.top/&quot;&gt;http://mon.domaine.top/&lt;/a&gt;. C’est normal, nginx ne sait pas encore où rediriger les requêtes.&lt;/p&gt;
+
+&lt;h2 id=&quot;troisième-étape--lancer-un-serveur&quot;&gt;Troisième étape : lancer un serveur&lt;/h2&gt;
+
+&lt;p&gt;Pour les besoins de tests, je vais juste lancer un netcat en mode écoute (&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;nc -l&lt;/code&gt;) sur le serveur :&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;docker run --expose 1234 -e VIRTUAL_HOST=mon.domaine.top -it --rm alpine:latest nc -l -p 1234
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;à partir de là, je retente la connexion depuis mon client vers &lt;a href=&quot;http://mon.domaine.top/&quot;&gt;http://mon.domaine.top/&lt;/a&gt; et les entêtes apparaissent côté serveur :&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;GET / HTTP/1.1
+Host: mon.domaine.top
+Connection: close
+X-Real-IP: ip-de-mon-serveur
+X-Forwarded-For: ip-de-mon-serveur
+X-Forwarded-Proto: http
+X-Forwarded-Ssl: off
+X-Forwarded-Port: 80
+X-Original-URI: /
+User-Agent: Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:102.0) Gecko/20100101 Firefox/102.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8
+Accept-Language: fr-BE,fr;q=0.7,en;q=0.3
+Accept-Encoding: gzip, deflate
+DNT: 1
+Upgrade-Insecure-Requests: 1
+Sec-GPC: 1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Je peux même répondre (sur le serveur), par exemple en tapant “bazinga” suivi de &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;RET&lt;/code&gt; puis &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;^D&lt;/code&gt;. Mon navigateur montre alors “bazinga”.&lt;/p&gt;
+
+&lt;h2 id=&quot;conclusion&quot;&gt;Conclusion&lt;/h2&gt;
+
+&lt;p&gt;C’est cool, ça marche. Il n’y a plus qu’à lancer des conteneurs qui exposent un port tout en leur définissant un VIRTUAL_HOST, et boum ça marche !&lt;/p&gt;
+</description>
+        <pubDate>Sun, 10 Jul 2022 00:00:00 +0200</pubDate>
+        <link>https://youngfrog.lavnir.be/informatique/2022/07/10/nginx-docker.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/informatique/2022/07/10/nginx-docker.html</guid>
+        
+        
+        <category>informatique</category>
+        
+      </item>
+    
+      <item>
+        <title>Compter les moutons</title>
+        <description>&lt;p&gt;Je suis mal à l’aise. Je suis certain d’avoir entendu un mouton se faire tuer ce matin, et cela me met… mal à l’aise.&lt;/p&gt;
+
+&lt;p&gt;D’une part, c’est rigoureusement interdit d’abattre chez soi.
+Le fait que X soit interdit ne devrait (?) pas être un élément important pour me forger un avis sur ce X, mais en pratique quand j’observe quelqu’un faire une chose interdite, cela me dérange viscéralement.
+Par exemple je déjà mal à l’aise, quand l’obligation de port du masque est en vigueur, si quelqu’un se balade sans masque. (En ce sens l’abolition de cette obligation était un soulagement pour moi.)&lt;/p&gt;
+
+&lt;p&gt;D’autre part, le principe même de tuer me rend mal à l’aise. Pourtant je suis
+conscient que je mange moi-même de l’animal mort (et dans des conditions
+probablement douteuses), mais cela ne me met pas moins mal à l’aise. NIMBY ?&lt;/p&gt;
+</description>
+        <pubDate>Sun, 10 Jul 2022 00:00:00 +0200</pubDate>
+        <link>https://youngfrog.lavnir.be/jepensetouthaut/2022/07/10/compter-les-moutons.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/jepensetouthaut/2022/07/10/compter-les-moutons.html</guid>
+        
+        
+        <category>jepensetouthaut</category>
+        
+      </item>
+    
+      <item>
+        <title>Tenda U12 AC1300</title>
+        <description>&lt;p&gt;Pour utiliser &lt;a href=&quot;https://www.tendacn.com/product/U12.html&quot;&gt;cet adaptateur Wi-Fi&lt;/a&gt;
+j’ai fini par cloner ce dépôt :&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://github.com/andriytk/rtl8812au/tree/fix-build-on-5.15&quot;&gt;https://github.com/andriytk/rtl8812au/tree/fix-build-on-5.15&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;et suivre les instructions.&lt;/p&gt;
+
+&lt;p&gt;Toutes mes autres tentatives (driver officiel, drive dans le dépôt se soldaient par des soucis de compilation.&lt;/p&gt;
+
+&lt;p&gt;bug sur launchpad:
+&lt;a href=&quot;https://bugs.launchpad.net/ubuntu/+source/rtl8812au/+bug/1927817&quot;&gt;https://bugs.launchpad.net/ubuntu/+source/rtl8812au/+bug/1927817&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;update&quot;&gt;UPDATE&lt;/h2&gt;
+
+&lt;p&gt;D’après https://linux-hardware.org/?id=usb:2604-0012 (j’ai envoyé une “probe” de &lt;a href=&quot;https://linux-hardware.org/?probe=b40a6c6b15&quot;&gt;mon système&lt;/a&gt;) on trouve 4 dépôts pertinents :&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;https://github.com/abperiasamy/rtl8812AU_8821AU_linux : j’avais tenté  mais souci de compilation&lt;/li&gt;
+  &lt;li&gt;https://github.com/aircrack-ng/rtl8812au : pas tenté&lt;/li&gt;
+  &lt;li&gt;https://github.com/gnab/rtl8812au : tenté aussi, mais souci de compilation (résolu dans celui de andriytk)&lt;/li&gt;
+  &lt;li&gt;https://github.com/gordboy/rtl8812au : pas tenté, et redirige désormais vers https://github.com/morrownr/8812au – cette personne semble en connaître un morceau. il y a notamment une liste de produits suggérés si on veut du USB-WiFi : https://github.com/morrownr/USB-WiFi&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;J’en ai pr&lt;/p&gt;
+</description>
+        <pubDate>Fri, 08 Jul 2022 00:00:00 +0200</pubDate>
+        <link>https://youngfrog.lavnir.be/informatique/2022/07/08/tenda-u12-ac1300.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/informatique/2022/07/08/tenda-u12-ac1300.html</guid>
+        
+        
+        <category>informatique</category>
+        
+      </item>
+    
+      <item>
+        <title>Recyclage de vêtements/textiles, chaussures</title>
+        <description>&lt;p&gt;D’après :
+https://www.bep-environnement.be/actualites/recyparc-focus-vetements/
+les vêtements et chaussures déchirées sont à jeter au porte à porte&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;pour ne pas jeter &lt;a href=&quot;https://refashion.fr/citoyen/fr/jerecycle&quot;&gt;https://refashion.fr/citoyen/fr/jerecycle&lt;/a&gt; (france)&lt;/li&gt;
+  &lt;li&gt;en pratique ecoconso dit qu’il faut jeter au tout venant &lt;a href=&quot;https://www.ecoconso.be/fr/Le-Textile&quot;&gt;https://www.ecoconso.be/fr/Le-Textile&lt;/a&gt; (trouvé sur &lt;a href=&quot;https://www.rtbf.be/article/que-faire-de-nos-vieux-textiles-10946402&quot;&gt;https://www.rtbf.be/article/que-faire-de-nos-vieux-textiles-10946402&lt;/a&gt;)&lt;/li&gt;
+&lt;/ul&gt;
+
+</description>
+        <pubDate>Fri, 08 Jul 2022 00:00:00 +0200</pubDate>
+        <link>https://youngfrog.lavnir.be/jepensetouthaut/2022/07/08/recyclage-de-vetements-chaussures.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/jepensetouthaut/2022/07/08/recyclage-de-vetements-chaussures.html</guid>
+        
+        
+        <category>jepensetouthaut</category>
+        
+      </item>
+    
+      <item>
+        <title>Quelques pensées conc. OpenStreetMaps</title>
+        <description>&lt;p&gt;J’ai récemment modifié OSM pour ajouter le &lt;a href=&quot;https://www.facebook.com/profile.php?id=100063521711970&quot;&gt;vélociste&lt;/a&gt;
+chez qui j’ai été récemment, et qui ne semblait pas indiqué sur OSM. C’était probablement une de mes premières modifs. 
+Une petite.
+Minuscule, même.
+Mais c’est pas la taille qui compte !&lt;/p&gt;
+
+&lt;h2 id=&quot;comment-ça-marche-osm-&quot;&gt;Comment ça marche, OSM ?&lt;/h2&gt;
+
+&lt;p&gt;Je voudrais retenir que OpenStreetMaps c’est une carte (au sens commun du terme : une image avec des routes, le nom des villes, etc.) appelée “fond de carte” (“tile layer”) avec potentiellement des couches (layers) d’informations par dessus.&lt;/p&gt;
+
+&lt;p&gt;Il y a &lt;a href=&quot;https://wiki.openstreetmap.org/wiki/Featured_tile_layers&quot;&gt;plusieurs fonds de carte&lt;/a&gt; (comme la &lt;a href=&quot;https://wiki.openstreetmap.org/wiki/Standard_tile_layer&quot;&gt;couche Standard&lt;/a&gt;, la couche CyclOSM, et d’autres), chacune composée de tuiles (petite images individuelles, couvrant une zone plus ou moins grande selon le niveau de zoom), générée à partir de deux sources de données :&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;de données cartographiques : c’est la base de donnée OpenStreetMap proprement dite,&lt;/li&gt;
+  &lt;li&gt;et d’un style (p.ex. &lt;a href=&quot;https://github.com/gravitystorm/openstreetmap-carto&quot;&gt;OSM-carto&lt;/a&gt;, le style de la couche Standard).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;La génération de ces tuiles fait intervenir d’autres logiciels, tels que Mapnik.&lt;/p&gt;
+
+&lt;p&gt;Il y a aussi du Javascript pour l’interface utilisateur, permettant de manipuler la vue de le fond de carte (déplacement, zoom). Une telle librairie JS est &lt;a href=&quot;https://leafletjs.com/reference.html&quot;&gt;Leaflet&lt;/a&gt; (qui d’ailleurs semble utilisé sur &lt;a href=&quot;https://osm.org&quot;&gt;https://osm.org&lt;/a&gt;, si je comprends bien).&lt;/p&gt;
+
+&lt;h2 id=&quot;créer-une-carte-sur-son-propre-site&quot;&gt;Créer une carte sur son propre site&lt;/h2&gt;
+
+&lt;p&gt;Documenté sur &lt;a href=&quot;https://wiki.openstreetmap.org/wiki/Deploying_your_own_Slippy_Map&quot;&gt;https://wiki.openstreetmap.org/wiki/Deploying_your_own_Slippy_Map&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;contribuer-à-osm&quot;&gt;Contribuer à OSM&lt;/h2&gt;
+
+&lt;p&gt;Voir &lt;a href=&quot;https://wiki.openstreetmap.org/wiki/FR:Guide_du_d%C3%A9butant&quot;&gt;https://wiki.openstreetmap.org/wiki/FR:Guide_du_d%C3%A9butant&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Mon, 04 Jul 2022 00:00:00 +0200</pubDate>
+        <link>https://youngfrog.lavnir.be/informatique/2022/07/04/quelques-pensees-conc-openstreetmaps.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/informatique/2022/07/04/quelques-pensees-conc-openstreetmaps.html</guid>
+        
+        
+        <category>informatique</category>
+        
+      </item>
+    
+      <item>
+        <title>Sur la sécurité des extensions Mozilla Firefox</title>
+        <description>&lt;p&gt;Lorsque j’installe une extension dans Firefox, il me dit de faire attention sans m’offrir directement la possibilité de lire le code source.&lt;/p&gt;
+
+&lt;p&gt;Bien sûr je peux aller lire le dépôt renseigné sur la page d’info de l’extension mais rien ne me dit que le fichier que j’ai téléchargé n’a pas été modifié entre-temps.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/pics/sur-la-securite-des-extensions-mozilla-firefox/Capture d’écran de 2021-08-07 14-14-55.png&quot; alt=&quot;Capture d'écran du prompt de Firefox pour installer une extension&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Les conseils donnés sur le site de Mozilla sont bons “en général” mais une vraie sécurité c’est de lire et comprendre le code source dans sa globalité.&lt;/p&gt;
+
+&lt;p&gt;Conseils : &lt;a href=&quot;https://support.mozilla.org/fr/kb/comprendre-risques-installation-extensions-autohebergees&quot;&gt;https://support.mozilla.org/fr/kb/comprendre-risques-installation-extensions-autohebergees&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 27 May 2022 00:00:00 +0200</pubDate>
+        <link>https://youngfrog.lavnir.be/informatique/2022/05/27/sur-la-securite-des-extensions-mozilla-firefox.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/informatique/2022/05/27/sur-la-securite-des-extensions-mozilla-firefox.html</guid>
+        
+        
+        <category>informatique</category>
+        
+      </item>
+    
+      <item>
+        <title>Anniversaires et Facebook</title>
+        <description>&lt;h2 id=&quot;pourquoi-&quot;&gt;Pourquoi ?&lt;/h2&gt;
+
+&lt;p&gt;Ça s’explique difficilement, mais l’idée est que si la machine me l’a rappelé, c’est que je n’y ai pas pensé suffisemment tôt, donc je ne mérite pas de souhaiter quoique ce soit. Cela impliquerait un manque de sincérité.&lt;/p&gt;
+
+&lt;h2 id=&quot;mais-comment-&quot;&gt;Mais comment ?&lt;/h2&gt;
+
+&lt;p&gt;Or, en matière d’anniversaires, j’y pense parfois quelques jours à l’avance ; mais, le jour même, j’avoue que je ne fais pas l’inventaire des gens-dont-c’est-l’anniversaire dès le matin. Dès lors, il n’arrive quasiment jamais que Facebook ne gagne pas à ce jeu.&lt;/p&gt;
+
+&lt;h2 id=&quot;donc-en-pratique&quot;&gt;Donc en pratique…&lt;/h2&gt;
+
+&lt;p&gt;Et donc je ne souhaite jamais l’anniversaire de personne, à de rares exceptions près.&lt;/p&gt;
+
+&lt;p&gt;Donc voilà pourquoi, A et M, vous n’aurez pas un mot de ma part (mais j’avais pensé à vous quand même!). [Quant à L &amp;amp; V, je ne savais pas que c’était votre annif aujourd’hui.] &lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;
+
+&lt;p&gt;De toute façon les anniversaires c’est nul. À la rigueur si on fêtait l’anniversaire de la date de conception… mais la date de naissance, REALLY?!.&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Cette entrée a été écrite un jour et publiée un autre… et pourrai être lue n’importe quand. Les déclarations étaient valables le jour où elles ont été écrites bien sûr. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Fri, 27 May 2022 00:00:00 +0200</pubDate>
+        <link>https://youngfrog.lavnir.be/jepensetouthaut/2022/05/27/anniversaires-et-facebook.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/jepensetouthaut/2022/05/27/anniversaires-et-facebook.html</guid>
+        
+        
+        <category>jepensetouthaut</category>
+        
+      </item>
+    
+      <item>
+        <title>Apprendre Git</title>
+        <description>&lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=1ffBJ4sVUb4&quot;&gt;[Linux.conf.au 2013] - Git For Ages 4 And Up&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sat, 30 Apr 2022 00:00:00 +0200</pubDate>
+        <link>https://youngfrog.lavnir.be/informatique/2022/04/30/apprendre-git.html</link>
+        <guid isPermaLink="true">https://youngfrog.lavnir.be/informatique/2022/04/30/apprendre-git.html</guid>
+        
+        
+        <category>informatique</category>
+        
+      </item>
+    
+  </channel>
+</rss>
